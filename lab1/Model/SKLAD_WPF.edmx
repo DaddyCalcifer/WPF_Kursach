@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище SKLAD_WPFModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище SKLAD_WPFModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="ID_Account" />
@@ -13,32 +13,32 @@
           <Property Name="Login" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TypeID" Type="int" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="100" />
-          <Property Name="ID_Owner" Type="int" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Phone" Type="varchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ID_Item" />
           </Key>
           <Property Name="ID_Item" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="ID_Structure" Type="int" Nullable="false" />
-          <Property Name="ID_Specific" Type="int" Nullable="false" />
-          <Property Name="Mass" Type="float" Nullable="false" />
-          <Property Name="SizeH" Type="float" Nullable="false" />
-          <Property Name="SizeW" Type="float" Nullable="false" />
-          <Property Name="ID_Owner" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Unit" Type="int" />
+          <Property Name="ID_Act" Type="int" />
+          <Property Name="Specific" Type="int" />
         </EntityType>
-        <EntityType Name="Owner">
+        <EntityType Name="LoadAct">
           <Key>
-            <PropertyRef Name="ID_Owner" />
+            <PropertyRef Name="ID_Pocket" />
           </Key>
-          <Property Name="ID_Owner" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Phone" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="ID_Pocket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoadDate" Type="date" Nullable="false" />
+          <Property Name="ID_Structure" Type="int" />
+          <Property Name="ID_Owner" Type="int" />
+          <Property Name="Provider" Type="int" />
         </EntityType>
         <EntityType Name="Specific">
           <Key>
@@ -56,69 +56,150 @@
           <Property Name="Adress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Square" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Item__ID_Owner__31EC6D26">
-          <End Role="Owner" Type="Self.Owner" Multiplicity="1">
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="ID_Unit" />
+          </Key>
+          <Property Name="ID_Unit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID_Type" />
+          </Key>
+          <Property Name="ID_Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK__Account__Type__534D60F1">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Item__ID_Act__60A75C0F">
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Owner">
-              <PropertyRef Name="ID_Owner" />
+            <Principal Role="LoadAct">
+              <PropertyRef Name="ID_Pocket" />
             </Principal>
             <Dependent Role="Item">
-              <PropertyRef Name="ID_Owner" />
+              <PropertyRef Name="ID_Act" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Item__ID_Specifi__30F848ED">
-          <End Role="Specific" Type="Self.Specific" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__Item__Specific__619B8048">
+          <End Role="Specific" Type="Self.Specific" Multiplicity="0..1" />
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Specific">
               <PropertyRef Name="ID_Specific" />
             </Principal>
             <Dependent Role="Item">
-              <PropertyRef Name="ID_Specific" />
+              <PropertyRef Name="Specific" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Item__ID_Structu__300424B4">
-          <End Role="Structure" Type="Self.Structure" Multiplicity="1">
+        <Association Name="FK__Item__Unit__5FB337D6">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
           <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="ID_Unit" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoadAct__ID_Owne__5AEE82B9">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="LoadAct">
+              <PropertyRef Name="ID_Owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoadAct__ID_Stru__59FA5E80">
+          <End Role="Structure" Type="Self.Structure" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="*" />
+          <ReferentialConstraint>
             <Principal Role="Structure">
               <PropertyRef Name="ID_Structure" />
             </Principal>
-            <Dependent Role="Item">
+            <Dependent Role="LoadAct">
               <PropertyRef Name="ID_Structure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoadAct__Provide__628FA481">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="LoadAct">
+              <PropertyRef Name="Provider" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище SKLAD_WPFModelContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoadAct" EntityType="Self.LoadAct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specific" EntityType="Self.Specific" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Structure" EntityType="Self.Structure" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Item__ID_Owner__31EC6D26" Association="Self.FK__Item__ID_Owner__31EC6D26">
-            <End Role="Owner" EntitySet="Owner" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__Type__534D60F1" Association="Self.FK__Account__Type__534D60F1">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__ID_Act__60A75C0F" Association="Self.FK__Item__ID_Act__60A75C0F">
+            <End Role="LoadAct" EntitySet="LoadAct" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
-          <AssociationSet Name="FK__Item__ID_Specifi__30F848ED" Association="Self.FK__Item__ID_Specifi__30F848ED">
+          <AssociationSet Name="FK__Item__Specific__619B8048" Association="Self.FK__Item__Specific__619B8048">
             <End Role="Specific" EntitySet="Specific" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
-          <AssociationSet Name="FK__Item__ID_Structu__300424B4" Association="Self.FK__Item__ID_Structu__300424B4">
-            <End Role="Structure" EntitySet="Structure" />
+          <AssociationSet Name="FK__Item__Unit__5FB337D6" Association="Self.FK__Item__Unit__5FB337D6">
+            <End Role="Unit" EntitySet="Unit" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
+          <AssociationSet Name="FK__LoadAct__ID_Owne__5AEE82B9" Association="Self.FK__LoadAct__ID_Owne__5AEE82B9">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoadAct__ID_Stru__59FA5E80" Association="Self.FK__LoadAct__ID_Stru__59FA5E80">
+            <End Role="Structure" EntitySet="Structure" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoadAct__Provide__628FA481" Association="Self.FK__LoadAct__Provide__628FA481">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SKLAD_WPFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -130,36 +211,42 @@
           <Property Name="Login" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TypeID" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ID_Owner" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserType" Relationship="Self.FK__Account__Type__534D60F1" FromRole="Account" ToRole="UserType" />
+          <NavigationProperty Name="LoadAct" Relationship="Self.FK__LoadAct__ID_Owne__5AEE82B9" FromRole="Account" ToRole="LoadAct" />
+          <NavigationProperty Name="LoadAct1" Relationship="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481" FromRole="Account" ToRole="LoadAct" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ID_Item" />
           </Key>
           <Property Name="ID_Item" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID_Structure" Type="Int32" Nullable="false" />
-          <Property Name="ID_Specific" Type="Int32" Nullable="false" />
-          <Property Name="Mass" Type="Double" Nullable="false" />
-          <Property Name="SizeH" Type="Double" Nullable="false" />
-          <Property Name="SizeW" Type="Double" Nullable="false" />
-          <Property Name="ID_Owner" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Owner" Relationship="Self.FK__Item__ID_Owner__31EC6D26" FromRole="Item" ToRole="Owner" />
-          <NavigationProperty Name="Specific" Relationship="Self.FK__Item__ID_Specifi__30F848ED" FromRole="Item" ToRole="Specific" />
-          <NavigationProperty Name="Structure" Relationship="Self.FK__Item__ID_Structu__300424B4" FromRole="Item" ToRole="Structure" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Unit" Type="Int32" />
+          <Property Name="ID_Act" Type="Int32" />
+          <NavigationProperty Name="LoadAct" Relationship="Self.FK__Item__ID_Act__60A75C0F" FromRole="Item" ToRole="LoadAct" />
+          <NavigationProperty Name="Unit1" Relationship="Self.FK__Item__Unit__5FB337D6" FromRole="Item" ToRole="Unit" />
+          <Property Name="Specific" Type="Int32" />
+          <NavigationProperty Name="Specific1" Relationship="SKLAD_WPFModel.FK__Item__Specific__619B8048" FromRole="Item" ToRole="Specific" />
         </EntityType>
-        <EntityType Name="Owner">
+        <EntityType Name="LoadAct">
           <Key>
-            <PropertyRef Name="ID_Owner" />
+            <PropertyRef Name="ID_Pocket" />
           </Key>
-          <Property Name="ID_Owner" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK__Item__ID_Owner__31EC6D26" FromRole="Owner" ToRole="Item" />
+          <Property Name="ID_Pocket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoadDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ID_Structure" Type="Int32" />
+          <Property Name="ID_Owner" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__LoadAct__ID_Owne__5AEE82B9" FromRole="LoadAct" ToRole="Account" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__Item__ID_Act__60A75C0F" FromRole="LoadAct" ToRole="Item" />
+          <NavigationProperty Name="Structure" Relationship="Self.FK__LoadAct__ID_Stru__59FA5E80" FromRole="LoadAct" ToRole="Structure" />
+          <Property Name="Provider" Type="Int32" />
+          <NavigationProperty Name="Account1" Relationship="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481" FromRole="LoadAct" ToRole="Account" />
         </EntityType>
         <EntityType Name="Specific">
           <Key>
@@ -167,7 +254,7 @@
           </Key>
           <Property Name="ID_Specific" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK__Item__ID_Specifi__30F848ED" FromRole="Specific" ToRole="Item" />
+          <NavigationProperty Name="Item" Relationship="SKLAD_WPFModel.FK__Item__Specific__619B8048" FromRole="Specific" ToRole="Item" />
         </EntityType>
         <EntityType Name="Structure">
           <Key>
@@ -177,46 +264,88 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Square" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Item" Relationship="Self.FK__Item__ID_Structu__300424B4" FromRole="Structure" ToRole="Item" />
+          <NavigationProperty Name="LoadAct" Relationship="Self.FK__LoadAct__ID_Stru__59FA5E80" FromRole="Structure" ToRole="LoadAct" />
         </EntityType>
-        <Association Name="FK__Item__ID_Owner__31EC6D26">
-          <End Role="Owner" Type="Self.Owner" Multiplicity="1">
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="ID_Unit" />
+          </Key>
+          <Property Name="ID_Unit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__Item__Unit__5FB337D6" FromRole="Unit" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="UserType">
+          <Key>
+            <PropertyRef Name="ID_Type" />
+          </Key>
+          <Property Name="ID_Type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Account__Type__534D60F1" FromRole="UserType" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__Account__Type__534D60F1">
+          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserType">
+              <PropertyRef Name="ID_Type" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoadAct__ID_Owne__5AEE82B9">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Owner">
-              <PropertyRef Name="ID_Owner" />
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
             </Principal>
-            <Dependent Role="Item">
+            <Dependent Role="LoadAct">
               <PropertyRef Name="ID_Owner" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Item__ID_Specifi__30F848ED">
-          <End Role="Specific" Type="Self.Specific" Multiplicity="1">
+        <Association Name="FK__Item__ID_Act__60A75C0F">
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Specific">
-              <PropertyRef Name="ID_Specific" />
+            <Principal Role="LoadAct">
+              <PropertyRef Name="ID_Pocket" />
             </Principal>
             <Dependent Role="Item">
-              <PropertyRef Name="ID_Specific" />
+              <PropertyRef Name="ID_Act" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Item__ID_Structu__300424B4">
-          <End Role="Structure" Type="Self.Structure" Multiplicity="1">
+        <Association Name="FK__Item__Unit__5FB337D6">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="ID_Unit" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoadAct__ID_Stru__59FA5E80">
+          <End Role="Structure" Type="Self.Structure" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Structure">
               <PropertyRef Name="ID_Structure" />
             </Principal>
-            <Dependent Role="Item">
+            <Dependent Role="LoadAct">
               <PropertyRef Name="ID_Structure" />
             </Dependent>
           </ReferentialConstraint>
@@ -224,22 +353,64 @@
         <EntityContainer Name="SKLAD_WPF" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Account" EntityType="Self.Account" />
           <EntitySet Name="Item" EntityType="Self.Item" />
-          <EntitySet Name="Owner" EntityType="Self.Owner" />
+          <EntitySet Name="LoadAct" EntityType="Self.LoadAct" />
           <EntitySet Name="Specific" EntityType="Self.Specific" />
           <EntitySet Name="Structure" EntityType="Self.Structure" />
-          <AssociationSet Name="FK__Item__ID_Owner__31EC6D26" Association="Self.FK__Item__ID_Owner__31EC6D26">
-            <End Role="Owner" EntitySet="Owner" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" />
+          <EntitySet Name="UserType" EntityType="Self.UserType" />
+          <AssociationSet Name="FK__Account__Type__534D60F1" Association="Self.FK__Account__Type__534D60F1">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoadAct__ID_Owne__5AEE82B9" Association="Self.FK__LoadAct__ID_Owne__5AEE82B9">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__ID_Act__60A75C0F" Association="Self.FK__Item__ID_Act__60A75C0F">
+            <End Role="LoadAct" EntitySet="LoadAct" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
-          <AssociationSet Name="FK__Item__ID_Specifi__30F848ED" Association="Self.FK__Item__ID_Specifi__30F848ED">
+          <AssociationSet Name="FK__Item__Unit__5FB337D6" Association="Self.FK__Item__Unit__5FB337D6">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LoadAct__ID_Stru__59FA5E80" Association="Self.FK__LoadAct__ID_Stru__59FA5E80">
+            <End Role="Structure" EntitySet="Structure" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__Specific__619B8048" Association="SKLAD_WPFModel.FK__Item__Specific__619B8048">
             <End Role="Specific" EntitySet="Specific" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
-          <AssociationSet Name="FK__Item__ID_Structu__300424B4" Association="Self.FK__Item__ID_Structu__300424B4">
-            <End Role="Structure" EntitySet="Structure" />
-            <End Role="Item" EntitySet="Item" />
+          <AssociationSet Name="FK__LoadAct__Provide__628FA481" Association="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
           </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Item__Specific__619B8048">
+          <End Type="SKLAD_WPFModel.Specific" Role="Specific" Multiplicity="0..1" />
+          <End Type="SKLAD_WPFModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specific">
+              <PropertyRef Name="ID_Specific" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="Specific" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LoadAct__Provide__628FA481">
+          <End Type="SKLAD_WPFModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="SKLAD_WPFModel.LoadAct" Role="LoadAct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="LoadAct">
+              <PropertyRef Name="Provider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -253,34 +424,34 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="ID_Owner" ColumnName="ID_Owner" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Item">
             <EntityTypeMapping TypeName="SKLAD_WPFModel.Item">
               <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Specific" ColumnName="Specific" />
                 <ScalarProperty Name="ID_Item" ColumnName="ID_Item" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ID_Structure" ColumnName="ID_Structure" />
-                <ScalarProperty Name="ID_Specific" ColumnName="ID_Specific" />
-                <ScalarProperty Name="Mass" ColumnName="Mass" />
-                <ScalarProperty Name="SizeH" ColumnName="SizeH" />
-                <ScalarProperty Name="SizeW" ColumnName="SizeW" />
-                <ScalarProperty Name="ID_Owner" ColumnName="ID_Owner" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ID_Act" ColumnName="ID_Act" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Owner">
-            <EntityTypeMapping TypeName="SKLAD_WPFModel.Owner">
-              <MappingFragment StoreEntitySet="Owner">
+          <EntitySetMapping Name="LoadAct">
+            <EntityTypeMapping TypeName="SKLAD_WPFModel.LoadAct">
+              <MappingFragment StoreEntitySet="LoadAct">
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+                <ScalarProperty Name="ID_Pocket" ColumnName="ID_Pocket" />
+                <ScalarProperty Name="LoadDate" ColumnName="LoadDate" />
+                <ScalarProperty Name="ID_Structure" ColumnName="ID_Structure" />
                 <ScalarProperty Name="ID_Owner" ColumnName="ID_Owner" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -299,6 +470,22 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="Square" ColumnName="Square" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unit">
+            <EntityTypeMapping TypeName="SKLAD_WPFModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="ID_Unit" ColumnName="ID_Unit" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserType">
+            <EntityTypeMapping TypeName="SKLAD_WPFModel.UserType">
+              <MappingFragment StoreEntitySet="UserType">
+                <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -27,8 +27,10 @@ namespace lab1.Model
     
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Item> Item { get; set; }
-        public virtual DbSet<Owner> Owner { get; set; }
+        public virtual DbSet<LoadAct> LoadAct { get; set; }
         public virtual DbSet<Specific> Specific { get; set; }
         public virtual DbSet<Structure> Structure { get; set; }
+        public virtual DbSet<Unit> Unit { get; set; }
+        public virtual DbSet<UserType> UserType { get; set; }
     }
 }

@@ -12,20 +12,18 @@ namespace lab1.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Owner
+    public partial class UserType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Owner()
+        public UserType()
         {
-            this.Item = new HashSet<Item>();
+            this.Account = new HashSet<Account>();
         }
     
-        public int ID_Owner { get; set; }
+        public int ID_Type { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Item { get; set; }
+        public virtual ICollection<Account> Account { get; set; }
     }
 }

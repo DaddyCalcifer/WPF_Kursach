@@ -16,11 +16,6 @@ namespace lab1.Logic
         public ObservableCollection<Account> ListAcc { get; set; } = new ObservableCollection<Account>();
         public void Register(Account acc)
         {
-            var own = new Owner();
-            own.Name = acc.Name;
-            own.Email = acc.Email;
-            own.Phone = "не задано";
-
             var queryAcc = (from account in DataEntitiesSKLAD.Account
                               where account.Login.Contains(acc.Login)
                               select account).ToList();
@@ -34,16 +29,6 @@ namespace lab1.Logic
             {
                 try
                 {
-                    DataEntitiesSKLAD.Owner.Add(own);
-                    DataEntitiesSKLAD.SaveChanges();
-
-                    var queryOwn = (from owner in DataEntitiesSKLAD.Owner
-                                    where owner.Name == acc.Name
-                                    where owner.Email == acc.Email
-                                    select owner).ToList();
-                    var own_ = queryOwn.ToList()[0];
-
-                    acc.ID_Owner = own_.ID_Owner;
                     DataEntitiesSKLAD.Account.Add(acc);
                     DataEntitiesSKLAD.SaveChanges();
                 }

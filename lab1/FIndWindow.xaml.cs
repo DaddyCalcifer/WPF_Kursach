@@ -29,7 +29,7 @@ namespace lab1
         private void Window_Closed(object sender, EventArgs e)
         {
             pm.fw = null;
-            pm.GetOwners();
+            pm.GetActs();
         }
         void find_act()
         {
@@ -66,7 +66,7 @@ namespace lab1
             phoneBox.Clear();
             emailBox.Clear();
             nameBox.Clear();
-            pm.GetOwners();
+            pm.GetActs();
         }
     }
 }

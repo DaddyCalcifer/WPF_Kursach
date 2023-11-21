@@ -13,6 +13,8 @@
       Loaded="Page_Loaded">
     <Page.Resources>
 
+        <core:ListStructure x:Key="listStruct"/>
+        <core:ListProvider x:Key="listProv"/>
         <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Padding" Value="-2"/>
             <Style.Triggers>
@@ -83,7 +85,8 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                   RowBackground="#FC96CFD4"
                   AlternatingRowBackground="#FFE6D3EF" 
                   BorderBrush="#FF1F33EB" BorderThickness="3"
-                  IsReadOnly="True" RowHeight="25" Cursor="Hand">
+                  IsReadOnly="True" RowHeight="25" Cursor="Hand"
+                  AutoGeneratingColumn="OnAutoGeneratingColumn" MouseDoubleClick="DataGridItem_MouseDoubleClick">
             <DataGrid.RowValidationErrorTemplate>
                 <ControlTemplate>
                     <Grid Margin="0,-2,0,-2"
@@ -100,24 +103,41 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 </ControlTemplate>
             </DataGrid.RowValidationErrorTemplate>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя"
-                    Binding="{Binding Name, Mode=TwoWay, ValidatesOnExceptions=True,
+                <DataGridTextColumn Header="Номер акта"
+                    Binding="{Binding ID_Pocket, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="E-mail" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="Дата разгрузки" EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
-                        <Binding Path="Email" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
+                        <Binding Path="LoadDate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                             <Binding.ValidationRules>
-                                <rule:EmailRule />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Телефон"
-                    Binding="{Binding Phone, Mode=TwoWay,
+                <DataGridComboBoxColumn Header="Склад"
+                    ItemsSource="{Binding Source={StaticResource listStruct}}"
+                    DisplayMemberPath="Name"
+                    SelectedValueBinding="{Binding Path=ID_Structure, Mode=TwoWay,
+                    UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="ID_Structure"/>
+
+                <DataGridComboBoxColumn Header="Поставщик"
+                    ItemsSource="{Binding Source={StaticResource listProv}}"
+                    DisplayMemberPath="Name"
+                    SelectedValueBinding="{Binding Path=Provider, Mode=TwoWay,
+                    UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="ID_Account"/>
+                <DataGridTextColumn Header="Позиций"
+                    Binding="{Binding Count, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="Сумма"
+                    Binding="{Binding Sum, Mode=OneWay, ValidatesOnExceptions=True,
+                    UpdateSourceTrigger=PropertyChanged}">
+                </DataGridTextColumn>
+                
             </DataGrid.Columns>
         </DataGrid>
 

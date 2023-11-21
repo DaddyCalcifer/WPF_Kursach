@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab1"
+        xmlns:rule="clr-namespace:lab1.ValidationRules"
         mc:Ignorable="d"
         Title="Авторизация" Height="454" Width="315">
     <Grid>
@@ -23,7 +24,15 @@
                 <Grid Background="#FFE5E5E5">
                     <TextBox x:Name="regNameBox" HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14"/>
                     <Label Content="Имя" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
-                    <TextBox x:Name="regEmailBox" HorizontalAlignment="Center" Margin="0,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14"/>
+                    <TextBox x:Name="regEmailBox" HorizontalAlignment="Center" Margin="0,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
+                        <TextBox.Text>
+                            <Binding Path="Email">
+                                <Binding.ValidationRules>
+                                    <rule:EmailRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <Label Content="Электронная почта" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
                     <TextBox x:Name="regLoginBox" HorizontalAlignment="Center" Margin="0,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14"/>
                     <Label Content="Логин" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>

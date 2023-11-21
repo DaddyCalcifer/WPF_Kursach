@@ -17,15 +17,14 @@ namespace lab1.Model
         public int ID_Item { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int ID_Structure { get; set; }
-        public int ID_Specific { get; set; }
-        public double Mass { get; set; }
-        public double SizeH { get; set; }
-        public double SizeW { get; set; }
-        public int ID_Owner { get; set; }
+        public int Count { get; set; }
+        public int Price { get; set; }
+        public Nullable<int> Unit { get; set; }
+        public Nullable<int> ID_Act { get; set; }
+        public Nullable<int> Specific { get; set; }
     
-        public virtual Owner Owner { get; set; }
-        public virtual Specific Specific { get; set; }
-        public virtual Structure Structure { get; set; }
+        public virtual LoadAct LoadAct { get; set; }
+        public virtual Unit Unit1 { get; set; }
+        public virtual Specific Specific1 { get; set; }
     }
 }

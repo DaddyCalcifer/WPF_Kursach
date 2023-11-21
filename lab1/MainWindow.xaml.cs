@@ -24,7 +24,9 @@ namespace lab1
         int id = -1;
         bool admin = false;
         public bool logout = false;
-        public MainWindow(int id, bool admin=false)
+        public PageMain pmain;
+        public PageSklad psklad;
+        public MainWindow(int id, bool admin=true)
         {
             InitializeComponent();
             this.id = id;
@@ -34,13 +36,8 @@ namespace lab1
         {
             if (admin)
             {
-                var page = new PageMain();
-                this.Content = page;
-            }
-            else
-            {
-                var ipage = new PageSklad(id, this);
-                this.Content = ipage;
+                pmain = new PageMain(id, this);
+                this.Content = pmain;
             }
         }
 

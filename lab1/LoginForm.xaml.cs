@@ -21,9 +21,12 @@ namespace lab1
     /// </summary>
     public partial class LoginForm : Window
     {
+        Account account;
         public LoginForm()
         {
             InitializeComponent();
+            account = new Account();
+            this.DataContext = account;
         }
 
         private void registerButton_Click(object sender, RoutedEventArgs e)
@@ -40,6 +43,7 @@ namespace lab1
                     account.Name = regNameBox.Text.Trim();
                     account.Email = regEmailBox.Text.Trim();
                     account.Login = regLoginBox.Text.Trim();
+                    account.Type = 2;
                     account.Password = BCrypt.Net.BCrypt.HashPassword(regPasswordBox1.Text.Trim());
 
                     auth.Register(account);

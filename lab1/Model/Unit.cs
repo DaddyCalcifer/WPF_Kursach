@@ -12,20 +12,18 @@ namespace lab1.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Structure
+    public partial class Unit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Structure()
+        public Unit()
         {
-            this.LoadAct = new HashSet<LoadAct>();
+            this.Item = new HashSet<Item>();
         }
     
-        public int ID_Structure { get; set; }
+        public int ID_Unit { get; set; }
         public string Name { get; set; }
-        public string Adress { get; set; }
-        public int Square { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoadAct> LoadAct { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
     }
 }

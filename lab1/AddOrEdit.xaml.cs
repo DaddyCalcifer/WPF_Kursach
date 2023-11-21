@@ -30,23 +30,23 @@ namespace lab1
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if(edit)
-            {
-                Owner own = new Owner();
-                own.Phone = PhoneBox.Text.Trim();
-                own.Email = EmailBox.Text.Trim();
-                own.Name = NameBox.Text.Trim();
-                pm.AddOwner(own);
-            } 
-            else
-            {
-                Owner own = new Owner();
-                own.Phone = PhoneBox.Text.Trim();
-                own.Email = EmailBox.Text.Trim();
-                own.Name =  NameBox.Text.Trim();
-                pm.AddOwner(own);
-            }
-            this.Close();
+            //if(edit)
+            //{
+            //    Owner own = new Owner();
+            //    own.Phone = PhoneBox.Text.Trim();
+            //    own.Email = EmailBox.Text.Trim();
+            //    own.Name = NameBox.Text.Trim();
+            //    pm.AddOwner(own);
+            //} 
+            //else
+            //{
+            //    Owner own = new Owner();
+            //    own.Phone = PhoneBox.Text.Trim();
+            //    own.Email = EmailBox.Text.Trim();
+            //    own.Name =  NameBox.Text.Trim();
+            //    pm.AddOwner(own);
+            //}
+            //this.Close();
         }
 
         public AddOrEdit(int id, PageMain pm)

@@ -14,6 +14,7 @@
     <Page.Resources>
         <core:ListSpecific x:Key="listSpec"/>
         <core:ListStructure x:Key="listStruct"/>
+        <core:ListUnit x:Key="listUnit"/>
         <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Padding" Value="-2"/>
             <Style.Triggers>
@@ -73,10 +74,6 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 </Button.CommandBindings>
             </Button>
             <Separator Margin="25,2,25,2"/>
-            <Button Name="Profile" ToolTip="Профиль"
-                    Margin="5,2,5,2" Height="50" Width="50" HorizontalAlignment="Right">
-                <Image Source="icons/User.png" Height="40" Width="40"></Image>
-            </Button>
             <Button Name="Logout" ToolTip="Сменить пользователя"
                     Margin="5,2,5,2" Height="50" Width="50" HorizontalAlignment="Right" Click="Logout_Click">
                 <Image Source="icons/logout.png" Height="40" Width="40"></Image>
@@ -123,41 +120,41 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                </DataGridTextColumn>
 
                 <DataGridComboBoxColumn Header="Специфика"
                     ItemsSource="{Binding Source={StaticResource listSpec}}"
                     DisplayMemberPath="Name"
-                    SelectedValueBinding="{Binding Path=ID_Specific, Mode=TwoWay,
+                    SelectedValueBinding="{Binding Path=Specific, Mode=TwoWay,
                     UpdateSourceTrigger=PropertyChanged}"
                                         SelectedValuePath="ID_Specific"/>
 
-                <DataGridComboBoxColumn Header="Помещение"
-                    ItemsSource="{Binding Source={StaticResource listStruct}}"
+                <DataGridTextColumn Header="Количество" EditingElementStyle="{StaticResource errorStyle}">
+                    <DataGridTextColumn.Binding >
+                        <Binding Path="Count" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
+                            <Binding.ValidationRules>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                
+                <DataGridComboBoxColumn Header="Единица"
+                    ItemsSource="{Binding Source={StaticResource listUnit}}"
                     DisplayMemberPath="Name"
-                    SelectedValueBinding="{Binding Path=ID_Structure, Mode=TwoWay,
+                    SelectedValueBinding="{Binding Path=Unit, Mode=TwoWay,
                     UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="ID_Structure"/>
+                                        SelectedValuePath="ID_Unit"/>
 
-                <DataGridTextColumn Header="Масса" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="Цена" EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
-                        <Binding Path="Mass" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
+                        <Binding Path="Price" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                             <Binding.ValidationRules>
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Высота" EditingElementStyle="{StaticResource errorStyle}">
-                    <DataGridTextColumn.Binding >
-                        <Binding Path="SizeH" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
-                            <Binding.ValidationRules>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-
-                <DataGridTextColumn Header="Ширина" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="..." EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
                         <Binding Path="SizeW" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                             <Binding.ValidationRules>

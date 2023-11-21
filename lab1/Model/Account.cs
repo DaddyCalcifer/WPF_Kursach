@@ -14,12 +14,25 @@ namespace lab1.Model
     
     public partial class Account
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Account()
+        {
+            this.LoadAct = new HashSet<LoadAct>();
+            this.LoadAct1 = new HashSet<LoadAct>();
+        }
+    
         public int ID_Account { get; set; }
         public string Login { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public int TypeID { get; set; }
         public string Password { get; set; }
-        public Nullable<int> ID_Owner { get; set; }
+        public Nullable<int> Type { get; set; }
+        public string Phone { get; set; }
+    
+        public virtual UserType UserType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LoadAct> LoadAct { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LoadAct> LoadAct1 { get; set; }
     }
 }

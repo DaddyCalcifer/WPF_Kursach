@@ -11,21 +11,40 @@ namespace lab1.Model
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Structure
+    using lab1.Model;
+    using System.Collections.ObjectModel;
+    using System.Data.Entity;
+
+    public partial class LoadAct
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Structure()
+        public LoadAct()
         {
-            this.LoadAct = new HashSet<LoadAct>();
+            this.Item = new HashSet<Item>();
         }
     
-        public int ID_Structure { get; set; }
-        public string Name { get; set; }
-        public string Adress { get; set; }
-        public int Square { get; set; }
-    
+        public int ID_Pocket { get; set; }
+        public System.DateTime LoadDate { get; set; }
+        public Nullable<int> ID_Structure { get; set; }
+        public Nullable<int> ID_Owner { get; set; }
+        public Nullable<int> Provider { get; set; }
+
+        public Nullable<int> Sum { get
+            {
+                return PageMain.ActSum(this);
+            } }
+        public Nullable<int> Count
+        {
+            get
+            {
+                return PageMain.ActCount(this);
+            }
+        }
+
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoadAct> LoadAct { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
+        public virtual Structure Structure { get; set; }
+        public virtual Account Account1 { get; set; }
     }
 }

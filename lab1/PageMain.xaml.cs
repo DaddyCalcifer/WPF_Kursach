@@ -24,50 +24,75 @@ namespace lab1
     public partial class PageMain : Page
     {
         public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
-        public ObservableCollection<Owner> ListOwner { get; set; }
-        public PageMain()
+        public ObservableCollection<LoadAct> ListActs { get; set; }
+        public MainWindow mw;
+
+        public static int ActSum(LoadAct act)
+        {
+            int sum = 0;
+            var queryActs = (from ite in DataEntitiesSKLAD.Item
+                             orderby ite.ID_Item
+                             where ite.ID_Act == act.ID_Pocket
+                             select ite).ToList();
+            foreach (Item itt in queryActs)
+            {
+                sum += itt.Price;
+            }
+            return sum;
+        }
+        public static int ActCount(LoadAct act)
+        {
+            var queryActs = (from ite in DataEntitiesSKLAD.Item
+                             orderby ite.ID_Item
+                             where ite.ID_Act == act.ID_Pocket
+                             select ite).ToList();
+            return queryActs.Count();
+        }
+
+        int owner_id = -1;
+        public PageMain(int owner, MainWindow mw)
         {
             InitializeComponent();
             DataEntitiesSKLAD = new SKLAD_WPF();
-            ListOwner = new ObservableCollection<Owner>();
+            ListActs = new ObservableCollection<LoadAct>();
+            owner_id = owner;
+            this.mw = mw;
         }
         public bool isDirty = true;
         public static bool canSave = true;
 
-        public void GetOwners()
+        public void GetActs()
         {
-            ListOwner.Clear();
-            var queryOwners = (from owner in DataEntitiesSKLAD.Owner
-                               orderby owner.Name
-                               select owner).ToList();
-            foreach (Owner own in queryOwners)
+            ListActs.Clear();
+            var queryActs = (from act in DataEntitiesSKLAD.LoadAct
+                               orderby act.ID_Pocket
+                               select act).ToList();
+            foreach (LoadAct act1 in queryActs)
             {
-                ListOwner.Add(own);
-
+                ListActs.Add(act1);
             }
-            DataGridItem.ItemsSource = ListOwner;
-            foreach (var item in ListOwner)
+            DataGridItem.ItemsSource = ListActs;
+            foreach (var item in ListActs)
             {
-                Console.WriteLine(item.Name + " " + item.Email);
+                Console.WriteLine(item.LoadDate + " " + item.Provider);
             }
         }
-        private void RewriteOwner()
+        private void RewriteAct()
         {
             DataEntitiesSKLAD = new SKLAD_WPF();
-            ListOwner.Clear();
-            GetOwners();
+            ListActs.Clear();
+            GetActs();
         }
 
         private void UndoCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            RewriteOwner();
+            RewriteAct();
             DataGridItem.IsReadOnly = true;
             isDirty = true;
         }
         private void UndoCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = isDirty;
-
         }
 
         private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -77,6 +102,7 @@ namespace lab1
 
             canSave = true;
             DataGridItem.IsReadOnly = true;
+            GetActs();
         }
 
         private void SaveCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -108,30 +134,30 @@ namespace lab1
         }
         public void FindByName(string name, string phone, string email)
         {
-            DataEntitiesSKLAD = new SKLAD_WPF();
-            ListOwner.Clear();
-            var queryOwner = (from owner in DataEntitiesSKLAD.Owner
-                              where owner.Name.Contains(name)
-                              where owner.Phone.Contains(phone)
-                              where owner.Email.Contains(email)
-                                select owner).ToList();
-            foreach (Owner ow in queryOwner)
-            {
-                ListOwner.Add(ow);
-            }
-            if (ListOwner.Count > 0)
-            {
-                DataGridItem.ItemsSource = ListOwner;
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Владельцы с заданным фильтром не найдены!",
-                    "Внимание!",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-                GetOwners();
-            }
+            //DataEntitiesSKLAD = new SKLAD_WPF();
+            //ListActs.Clear();
+            //var queryOwner = (from owner in DataEntitiesSKLAD.Owner
+            //                  where owner.Name.Contains(name)
+            //                  where owner.Phone.Contains(phone)
+            //                  where owner.Email.Contains(email)
+            //                    select owner).ToList();
+            //foreach (Owner ow in queryOwner)
+            //{
+            //    ListOwner.Add(ow);
+            //}
+            //if (ListOwner.Count > 0)
+            //{
+            //    DataGridItem.ItemsSource = ListOwner;
+            //}
+            //else
+            //{
+            //    MessageBox.Show(
+            //        "Владельцы с заданным фильтром не найдены!",
+            //        "Внимание!",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning);
+            //    GetOwners();
+            //}
         }
 
         private void FindCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -142,18 +168,19 @@ namespace lab1
         private void AddCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             //MessageBox.Show("Создание");
-            Owner own = new Owner();
-            own.Phone = "не задано";
-            own.Email = "не задано";
-            own.Name = "не задано";
-            AddOwner(own);
+            LoadAct act = new LoadAct();
+            act.ID_Owner = owner_id;
+            act.LoadDate = DateTime.Now;
+            act.Provider = 1;
+            act.ID_Structure = 1;
+            AddAct(act);
         }
-        public void AddOwner(Owner own)
+        public void AddAct(LoadAct act)
         {
             try
             {
-                DataEntitiesSKLAD.Owner.Add(own);
-                ListOwner.Add(own);
+                DataEntitiesSKLAD.LoadAct.Add(act);
+                ListActs.Add(act);
                 isDirty = true;
             }
             catch (Exception ex)
@@ -171,17 +198,17 @@ namespace lab1
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             //MessageBox.Show("Удаление");
-            Owner emp = DataGridItem.SelectedItem as Owner;
+            LoadAct emp = DataGridItem.SelectedItem as LoadAct;
             if (emp != null)
             {
                 MessageBoxResult result = MessageBox.Show("Удалить данные ",
                 "Предупреждение", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    DataEntitiesSKLAD.Owner.Remove(emp);
+                    DataEntitiesSKLAD.LoadAct.Remove(emp);
                     DataGridItem.SelectedIndex =
                     DataGridItem.SelectedIndex == 0 ? 1 : DataGridItem.SelectedIndex - 1;
-                    ListOwner.Remove(emp);
+                    ListActs.Remove(emp);
                     //DataEntitiesSKLAD.SaveChanges();
                     isDirty = true;
                 }
@@ -197,11 +224,25 @@ namespace lab1
             e.CanExecute = true;
 
         }
-
+        private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyType == typeof(System.DateTime))
+                (e.Column as DataGridTextColumn).Binding.StringFormat = "dd/MM/yyyy";
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            GetOwners();
+            GetActs();
             DataGridItem.SelectedIndex = 0;
+        }
+
+        private void DataGridItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataGridItem.IsReadOnly)
+            {
+                var index = ((LoadAct)DataGridItem.CurrentCell.Item).ID_Pocket;
+                Console.WriteLine("index: " + index);
+                mw.Content = new PageSklad(index, mw);
+            }
         }
     }
 }

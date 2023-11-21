@@ -199,9 +199,11 @@
     <Compile Include="Model\Item.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ListUnit.cs" />
     <Compile Include="Model\ListSpecific.cs" />
+    <Compile Include="Model\ListProvider.cs" />
     <Compile Include="Model\ListStructure.cs" />
-    <Compile Include="Model\Owner.cs">
+    <Compile Include="Model\LoadAct.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SKLAD_WPF.Context.cs">
@@ -223,6 +225,12 @@
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Structure.cs">
+      <DependentUpon>SKLAD_WPF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unit.cs">
+      <DependentUpon>SKLAD_WPF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UserType.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
     <Compile Include="PageSklad.xaml.cs">

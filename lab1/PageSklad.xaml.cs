@@ -23,23 +23,22 @@ namespace lab1
     /// </summary>
     public partial class PageSklad : Page
     {
-        public int owner_id = -1, acc_id = -1;
+        public int act_id = -1;
         MainWindow mainWindow;
         public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
         public ObservableCollection<Item> ListItem { get; set; }
-        public PageSklad(int acc_id, MainWindow mainWindow)
+        public PageSklad(int act_id, MainWindow mainWindow)
         {
             InitializeComponent();
             DataEntitiesSKLAD = new SKLAD_WPF();
             ListItem = new ObservableCollection<Item>();
-            this.acc_id = acc_id;
+            this.act_id = act_id;
 
-            var queryAccs = (from item in DataEntitiesSKLAD.Account
-                               where item.ID_Account == acc_id
+            var queryAccs = (from item in DataEntitiesSKLAD.Item
+                               where item.ID_Act == act_id
                                select item).ToList();
-            owner_id = (int)queryAccs[0].ID_Owner;
 
-            Console.WriteLine(owner_id);
+            Console.WriteLine(act_id);
             this.mainWindow = mainWindow;
         }
         public bool isDirty = true;
@@ -49,7 +48,7 @@ namespace lab1
         {
             ListItem.Clear();
             var queryOwners = (from item in DataEntitiesSKLAD.Item
-                               where item.ID_Owner == owner_id
+                               where item.ID_Act == act_id
                                orderby item.ID_Item
                                select item).ToList();
             foreach (Item own in queryOwners)
@@ -158,13 +157,12 @@ namespace lab1
             MessageBox.Show("Создание");
             Item ite = new Item();
             ite.Name = "не задано";
-            ite.ID_Specific = 0;
+            ite.Specific = 0;
+            ite.Count = 0;
             ite.Description = "не задано";
-            ite.SizeH = 0;
-            ite.SizeW = 0;
-            ite.Mass = 0;
-            ite.ID_Structure = 0;
-            ite.ID_Owner = owner_id;
+            ite.ID_Act = act_id;
+            ite.Price = 0;
+            ite.Unit = 0;
             AddItem(ite);
         }
         public void AddItem(Item own)
@@ -219,8 +217,9 @@ namespace lab1
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.logout = true;
-            mainWindow.Close();
+            //mainWindow.logout = true;
+            //mainWindow.Close();
+            mainWindow.Content = mainWindow.pmain;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
