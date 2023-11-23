@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using lab1.Model;
 using System.Collections.ObjectModel;
 namespace lab1
 {
@@ -21,24 +22,33 @@ namespace lab1
     /// </summary>
     public partial class MainWindow : Window
     {
-        int id = -1;
+        public int id = -1;
         bool admin = false;
         public bool logout = false;
-        public PageMain pmain;
+        public Page page_;
         public PageSklad psklad;
-        public MainWindow(int id, bool admin=true)
+        Account account;
+        public MainWindow(int id)
         {
             InitializeComponent();
             this.id = id;
-            this.admin = admin;
+            account = PageProfile.GetAcc(id);
         }
         private void frame1_Loaded(object sender, RoutedEventArgs e)
         {
-            if (admin)
+            switch(account.Type)
             {
-                pmain = new PageMain(id, this);
-                this.Content = pmain;
+                case 2:
+                    page_ = new PageMain(id, this);
+                    break;
+                case 3:
+                    page_ = new AdminPage(this, account.ID_Account);
+                    break;
+                default:
+                    MessageBox.Show("Ошибка авторизации!");
+                    return;
             }
+            this.Content = page_;
         }
 
         private void frame1_Navigated(object sender, NavigationEventArgs e)

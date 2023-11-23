@@ -19,6 +19,9 @@
         <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__ID_Stru__59FA5E80" ManuallyRouted="false" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__Item__Specific__619B8048" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.Provider" Width="1.5" PointX="5.25" PointY="8.625" />
+        <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__AddedBy__66603565" />
+        <AssociationConnector Association="SKLAD_WPFModel.FK__Provider__AddedB__656C112C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

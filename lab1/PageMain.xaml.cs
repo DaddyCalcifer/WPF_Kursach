@@ -26,9 +26,8 @@ namespace lab1
         public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
         public ObservableCollection<LoadAct> ListActs { get; set; }
         public MainWindow mw;
-
+        int role;
         int owner_id = -1;
-
         public static int ActSum(LoadAct act)
         {
             int sum = 0;
@@ -57,6 +56,7 @@ namespace lab1
             ListActs = new ObservableCollection<LoadAct>();
             owner_id = owner;
             this.mw = mw;
+            role = (int)PageProfile.GetAcc(owner).Type;
         }
         public bool isDirty = true;
         public static bool canSave = true;
@@ -64,10 +64,19 @@ namespace lab1
         public void GetActs()
         {
             ListActs.Clear();
-            var queryActs = (from act in DataEntitiesSKLAD.LoadAct
-                             where act.ID_Owner == owner_id
+
+            DataGridItem.Columns[6].Visibility = Visibility.Hidden;
+            List<LoadAct> queryActs = (from act in DataEntitiesSKLAD.LoadAct
+                             where act.AddedBy == owner_id
                                orderby act.ID_Pocket
                                select act).ToList();
+            if (role == 3)
+            {
+                DataGridItem.Columns[6].Visibility = Visibility.Visible;
+                queryActs = (from act in DataEntitiesSKLAD.LoadAct
+                             orderby act.ID_Pocket
+                             select act).ToList();
+            }
             foreach (LoadAct act1 in queryActs)
             {
                 ListActs.Add(act1);
@@ -170,10 +179,11 @@ namespace lab1
         {
             //MessageBox.Show("Создание");
             LoadAct act = new LoadAct();
-            act.ID_Owner = owner_id;
+            act.ID_Owner = 0;
             act.LoadDate = DateTime.Now;
             act.Provider = 1;
             act.ID_Structure = 1;
+            act.AddedBy = owner_id;
             AddAct(act);
         }
         public void AddAct(LoadAct act)

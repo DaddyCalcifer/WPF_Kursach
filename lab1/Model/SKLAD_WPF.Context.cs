@@ -32,5 +32,6 @@ namespace lab1.Model
         public virtual DbSet<Structure> Structure { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<UserType> UserType { get; set; }
+        public virtual DbSet<Provider> Provider { get; set; }
     }
 }

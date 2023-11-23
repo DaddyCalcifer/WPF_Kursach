@@ -219,7 +219,7 @@ namespace lab1
         {
             //mainWindow.logout = true;
             //mainWindow.Close();
-            mainWindow.Content = mainWindow.pmain;
+            mainWindow.Content = new PageMain(mainWindow.id, mainWindow);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

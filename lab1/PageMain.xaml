@@ -12,9 +12,10 @@
       Title="PageMain"
       Loaded="Page_Loaded">
     <Page.Resources>
-
+        <DiscreteObjectKeyFrame x:Key="FlagKey" Value="{Binding addedBy}"/>
         <core:ListStructure x:Key="listStruct"/>
         <core:ListProvider x:Key="listProv"/>
+        <core:ListAcc x:Key="listAcc"/>
         <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Padding" Value="-2"/>
             <Style.Triggers>
@@ -134,7 +135,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                     DisplayMemberPath="Name"
                     SelectedValueBinding="{Binding Path=Provider, Mode=TwoWay,
                     UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="ID_Account"/>
+                                        SelectedValuePath="ID_Producer"/>
                 <DataGridTextColumn Header="Позиций"
                     Binding="{Binding Count, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
@@ -143,6 +144,13 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                     Binding="{Binding Sum, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
+                <DataGridComboBoxColumn Header="Принял" Width="200"
+                    ItemsSource="{Binding Source={StaticResource listAcc}}"
+                    DisplayMemberPath="Name"
+                    Visibility="{Binding Value, Source={StaticResource FlagKey}}"
+                    SelectedValueBinding="{Binding Path=AddedBy, Mode=TwoWay,
+                    UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="ID_Account"/>
                 
             </DataGrid.Columns>
         </DataGrid>

@@ -39,6 +39,16 @@
           <Property Name="ID_Structure" Type="int" />
           <Property Name="ID_Owner" Type="int" />
           <Property Name="Provider" Type="int" />
+          <Property Name="AddedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="ID_Producer" />
+          </Key>
+          <Property Name="ID_Producer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="12" />
+          <Property Name="AddedBy" Type="int" />
         </EntityType>
         <EntityType Name="Specific">
           <Key>
@@ -122,6 +132,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__LoadAct__AddedBy__66603565">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="LoadAct" Type="Self.LoadAct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="LoadAct">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__LoadAct__ID_Owne__5AEE82B9">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -162,10 +184,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Provider__AddedB__656C112C">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Provider" Type="Self.Provider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="Provider">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище SKLAD_WPFModelContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoadAct" EntityType="Self.LoadAct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provider" EntityType="Self.Provider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specific" EntityType="Self.Specific" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Structure" EntityType="Self.Structure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
@@ -186,6 +221,10 @@
             <End Role="Unit" EntitySet="Unit" />
             <End Role="Item" EntitySet="Item" />
           </AssociationSet>
+          <AssociationSet Name="FK__LoadAct__AddedBy__66603565" Association="Self.FK__LoadAct__AddedBy__66603565">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
           <AssociationSet Name="FK__LoadAct__ID_Owne__5AEE82B9" Association="Self.FK__LoadAct__ID_Owne__5AEE82B9">
             <End Role="Account" EntitySet="Account" />
             <End Role="LoadAct" EntitySet="LoadAct" />
@@ -197,6 +236,10 @@
           <AssociationSet Name="FK__LoadAct__Provide__628FA481" Association="Self.FK__LoadAct__Provide__628FA481">
             <End Role="Account" EntitySet="Account" />
             <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Provider__AddedB__656C112C" Association="Self.FK__Provider__AddedB__656C112C">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Provider" EntitySet="Provider" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -217,6 +260,8 @@
           <NavigationProperty Name="UserType" Relationship="Self.FK__Account__Type__534D60F1" FromRole="Account" ToRole="UserType" />
           <NavigationProperty Name="LoadAct" Relationship="Self.FK__LoadAct__ID_Owne__5AEE82B9" FromRole="Account" ToRole="LoadAct" />
           <NavigationProperty Name="LoadAct1" Relationship="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481" FromRole="Account" ToRole="LoadAct" />
+          <NavigationProperty Name="LoadAct2" Relationship="SKLAD_WPFModel.FK__LoadAct__AddedBy__66603565" FromRole="Account" ToRole="LoadAct" />
+          <NavigationProperty Name="Provider" Relationship="SKLAD_WPFModel.FK__Provider__AddedB__656C112C" FromRole="Account" ToRole="Provider" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -247,6 +292,8 @@
           <NavigationProperty Name="Structure" Relationship="Self.FK__LoadAct__ID_Stru__59FA5E80" FromRole="LoadAct" ToRole="Structure" />
           <Property Name="Provider" Type="Int32" />
           <NavigationProperty Name="Account1" Relationship="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481" FromRole="LoadAct" ToRole="Account" />
+          <Property Name="AddedBy" Type="Int32" />
+          <NavigationProperty Name="Account2" Relationship="SKLAD_WPFModel.FK__LoadAct__AddedBy__66603565" FromRole="LoadAct" ToRole="Account" />
         </EntityType>
         <EntityType Name="Specific">
           <Key>
@@ -386,6 +433,15 @@
             <End Role="Account" EntitySet="Account" />
             <End Role="LoadAct" EntitySet="LoadAct" />
           </AssociationSet>
+          <EntitySet Name="Provider" EntityType="SKLAD_WPFModel.Provider" />
+          <AssociationSet Name="FK__LoadAct__AddedBy__66603565" Association="SKLAD_WPFModel.FK__LoadAct__AddedBy__66603565">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="LoadAct" EntitySet="LoadAct" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Provider__AddedB__656C112C" Association="SKLAD_WPFModel.FK__Provider__AddedB__656C112C">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Provider" EntitySet="Provider" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Item__Specific__619B8048">
           <End Type="SKLAD_WPFModel.Specific" Role="Specific" Multiplicity="0..1" />
@@ -408,6 +464,40 @@
             </Principal>
             <Dependent Role="LoadAct">
               <PropertyRef Name="Provider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="ID_Producer" />
+          </Key>
+          <Property Name="ID_Producer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AddedBy" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="SKLAD_WPFModel.FK__Provider__AddedB__656C112C" FromRole="Provider" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__LoadAct__AddedBy__66603565">
+          <End Type="SKLAD_WPFModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="SKLAD_WPFModel.LoadAct" Role="LoadAct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="LoadAct">
+              <PropertyRef Name="AddedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Provider__AddedB__656C112C">
+          <End Type="SKLAD_WPFModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="SKLAD_WPFModel.Provider" Role="Provider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID_Account" />
+            </Principal>
+            <Dependent Role="Provider">
+              <PropertyRef Name="AddedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -447,6 +537,7 @@
           <EntitySetMapping Name="LoadAct">
             <EntityTypeMapping TypeName="SKLAD_WPFModel.LoadAct">
               <MappingFragment StoreEntitySet="LoadAct">
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
                 <ScalarProperty Name="Provider" ColumnName="Provider" />
                 <ScalarProperty Name="ID_Pocket" ColumnName="ID_Pocket" />
                 <ScalarProperty Name="LoadDate" ColumnName="LoadDate" />
@@ -486,6 +577,16 @@
               <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="ID_Type" ColumnName="ID_Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provider">
+            <EntityTypeMapping TypeName="SKLAD_WPFModel.Provider">
+              <MappingFragment StoreEntitySet="Provider">
+                <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID_Producer" ColumnName="ID_Producer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

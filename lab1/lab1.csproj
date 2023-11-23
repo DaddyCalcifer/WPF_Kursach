@@ -199,12 +199,16 @@
     <Compile Include="Model\Item.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ListAcc.cs" />
     <Compile Include="Model\ListUserType.cs" />
     <Compile Include="Model\ListUnit.cs" />
     <Compile Include="Model\ListSpecific.cs" />
     <Compile Include="Model\ListProvider.cs" />
     <Compile Include="Model\ListStructure.cs" />
     <Compile Include="Model\LoadAct.cs">
+      <DependentUpon>SKLAD_WPF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Provider.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SKLAD_WPF.Context.cs">
@@ -233,6 +237,9 @@
     </Compile>
     <Compile Include="Model\UserType.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageProfile.xaml.cs">
       <DependentUpon>PageProfile.xaml</DependentUpon>
@@ -273,6 +280,10 @@
     <Page Include="PageMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PageProfile.xaml">
       <SubType>Designer</SubType>
@@ -338,6 +349,11 @@
     <Resource Include="icons\User.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="icons\Docs.png" />
+    <Resource Include="icons\Items.png" />
+    <Resource Include="icons\Providers.png" />
+    <Resource Include="icons\Structures.png" />
+    <Resource Include="icons\Workers.png" />
     <Content Include="Model\SKLAD_WPF.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SKLAD_WPF.edmx</DependentUpon>
