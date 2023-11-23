@@ -29,6 +29,7 @@ namespace lab1.Logic
             {
                 try
                 {
+                    acc.Password = BCrypt.Net.BCrypt.HashPassword(acc.Password);
                     DataEntitiesSKLAD.Account.Add(acc);
                     DataEntitiesSKLAD.SaveChanges();
                 }

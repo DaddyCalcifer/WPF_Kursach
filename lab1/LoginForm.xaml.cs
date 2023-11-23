@@ -44,7 +44,8 @@ namespace lab1
                     account.Email = regEmailBox.Text.Trim();
                     account.Login = regLoginBox.Text.Trim();
                     account.Type = 2;
-                    account.Password = BCrypt.Net.BCrypt.HashPassword(regPasswordBox1.Text.Trim());
+                    account.Phone = String.Empty;
+                    account.Password = regPasswordBox1.Text.Trim();
 
                     auth.Register(account);
                     
@@ -57,7 +58,7 @@ namespace lab1
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             AuthLogic auth = new AuthLogic();
-            int id = auth.Login(logLoginBox.Text.Trim(), logPasswordBox.Text.Trim());
+            int id = auth.Login(logLoginBox.Text.Trim(), logPasswordBox.Password.Trim());
             if (id != -1)
             {
                 MessageBox.Show("Авторизован пользователь: " + id.ToString());
@@ -67,6 +68,19 @@ namespace lab1
                 this.Show();
             }
             else MessageBox.Show("Неверный логин или пароль!");
+        }
+
+        private void showPassword_Checked(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        private void logPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void logShowPasswordBox_Copy_TextChanged(object sender, TextChangedEventArgs e)
+        {
         }
     }
 }

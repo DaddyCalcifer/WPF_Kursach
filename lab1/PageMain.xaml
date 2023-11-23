@@ -19,7 +19,8 @@
             <Setter Property="Padding" Value="-2"/>
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="Background" Value="blue"/>
+                    <Setter Property="Background" Value="red"/>
+                    <Setter Property="Foreground" Value="White"/>
                     <Setter Property="BorderThickness" Value="1" />
                     <Setter Property="ToolTip"
 Value="{Binding RelativeSource={RelativeSource Self},
@@ -42,6 +43,11 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 <MenuItem Header="Удалить" Command="Delete"/>
             </MenuItem>
             <MenuItem Header="Отчёт"/>
+            <MenuItem Header="Аккаунт">
+                <MenuItem Header="Открыть профиль" Click="MenuItem_Click"/>
+                <Separator/>
+                <MenuItem Header="Сменить пользователя" Click="MenuItem_Click_1"/>
+            </MenuItem>
         </Menu>
         <ToolBar Name="ToolBar1" Margin="3" Height="60">
             <Button Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание"
@@ -107,7 +113,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                     Binding="{Binding ID_Pocket, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Дата разгрузки" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="Дата разгрузки" Width="130" EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
                         <Binding Path="LoadDate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                             <Binding.ValidationRules>
@@ -116,14 +122,14 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
 
-                <DataGridComboBoxColumn Header="Склад"
+                <DataGridComboBoxColumn Header="Склад" Width="110"
                     ItemsSource="{Binding Source={StaticResource listStruct}}"
                     DisplayMemberPath="Name"
                     SelectedValueBinding="{Binding Path=ID_Structure, Mode=TwoWay,
                     UpdateSourceTrigger=PropertyChanged}"
                                         SelectedValuePath="ID_Structure"/>
 
-                <DataGridComboBoxColumn Header="Поставщик"
+                <DataGridComboBoxColumn Header="Поставщик" Width="200"
                     ItemsSource="{Binding Source={StaticResource listProv}}"
                     DisplayMemberPath="Name"
                     SelectedValueBinding="{Binding Path=Provider, Mode=TwoWay,
@@ -133,7 +139,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                     Binding="{Binding Count, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Сумма"
+                <DataGridTextColumn Header="Сумма (руб.)"
                     Binding="{Binding Sum, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>

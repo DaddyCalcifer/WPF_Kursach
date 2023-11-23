@@ -27,6 +27,8 @@ namespace lab1
         public ObservableCollection<LoadAct> ListActs { get; set; }
         public MainWindow mw;
 
+        int owner_id = -1;
+
         public static int ActSum(LoadAct act)
         {
             int sum = 0;
@@ -48,8 +50,6 @@ namespace lab1
                              select ite).ToList();
             return queryActs.Count();
         }
-
-        int owner_id = -1;
         public PageMain(int owner, MainWindow mw)
         {
             InitializeComponent();
@@ -65,6 +65,7 @@ namespace lab1
         {
             ListActs.Clear();
             var queryActs = (from act in DataEntitiesSKLAD.LoadAct
+                             where act.ID_Owner == owner_id
                                orderby act.ID_Pocket
                                select act).ToList();
             foreach (LoadAct act1 in queryActs)
@@ -243,6 +244,19 @@ namespace lab1
                 Console.WriteLine("index: " + index);
                 mw.Content = new PageSklad(index, mw);
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var prof_page = new PageProfile(mw, this, owner_id);
+            mw.Content = prof_page;
+        }
+
+        //Сменить аккаунт
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            mw.logout = true;
+            mw.Close();
         }
     }
 }

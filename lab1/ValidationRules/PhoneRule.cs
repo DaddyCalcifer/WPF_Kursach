@@ -23,11 +23,13 @@ namespace lab1.ValidationRules
             if (regex.IsMatch(phone))
             {
                 PageMain.canSave = true;
+                PageProfile.canSave = true;
                 return new ValidationResult(true, null);
             }
             else
             {
                 PageMain.canSave = false;
+                PageProfile.canSave = false;
                 return new ValidationResult(false,
                    "Номер телефона должен иметь формат +7XXXXXXXXXX или 8XXXXXXXXXX");
             }

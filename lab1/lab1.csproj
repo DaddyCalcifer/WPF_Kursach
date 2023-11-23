@@ -199,6 +199,7 @@
     <Compile Include="Model\Item.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ListUserType.cs" />
     <Compile Include="Model\ListUnit.cs" />
     <Compile Include="Model\ListSpecific.cs" />
     <Compile Include="Model\ListProvider.cs" />
@@ -233,9 +234,13 @@
     <Compile Include="Model\UserType.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="PageProfile.xaml.cs">
+      <DependentUpon>PageProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageSklad.xaml.cs">
       <DependentUpon>PageSklad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValidationRules\EmptyRule.cs" />
     <Compile Include="ValidationRules\EmailRule.cs" />
     <Compile Include="ValidationRules\PhoneRule.cs" />
     <Page Include="AddOrEdit.xaml">
@@ -266,6 +271,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PageMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,17 +8,16 @@ using System.Windows.Controls;
 
 namespace lab1.ValidationRules
 {
-    public class EmailRule : ValidationRule
+    public class EmptyRule : ValidationRule
     {
         public override ValidationResult Validate(object value,
        System.Globalization.CultureInfo cultureInfo)
         {
             if(value == null)
-                return new ValidationResult(false, "Адрес электронной почты не задан! ");
+                return new ValidationResult(false, "Поле не заполнено!");
 
             string email = value.ToString();
-            Regex regex = new Regex("^\\S +@\\S +\\.\\S + $");
-            if (email.Contains("@") && email.Contains("."))
+            if (email!=String.Empty)
             {
                 PageProfile.canSave = true;
                 return new ValidationResult(true, null);
@@ -27,7 +26,7 @@ namespace lab1.ValidationRules
             {
                 PageProfile.canSave = false;
                 return new ValidationResult(false,
-                   "Адрес электронной почты должен содержать символы @ и(.) точки \n Шаблон адреса: adress@mymail.com");
+                   "Поле должно содержать информацию!");
             }
         }
     }
