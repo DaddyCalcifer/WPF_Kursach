@@ -61,10 +61,10 @@ namespace lab1
             int id = auth.Login(logLoginBox.Text.Trim(), logPasswordBox.Password.Trim());
             if (id != -1)
             {
-                MessageBox.Show("Авторизован пользователь: " + id.ToString());
                 MainWindow mw = new MainWindow(id);
                 this.Hide();
                 mw.ShowDialog();
+                account = new Account();
                 this.Show();
             }
             else MessageBox.Show("Неверный логин или пароль!");

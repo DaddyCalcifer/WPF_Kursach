@@ -27,7 +27,8 @@ namespace lab1
         MainWindow mainWindow;
         public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
         public ObservableCollection<Item> ListItem { get; set; }
-        public PageSklad(int act_id, MainWindow mainWindow)
+        bool adminVision = false;
+        public PageSklad(int act_id, MainWindow mainWindow, bool adminVision=false)
         {
             InitializeComponent();
             DataEntitiesSKLAD = new SKLAD_WPF();
@@ -40,6 +41,7 @@ namespace lab1
 
             Console.WriteLine(act_id);
             this.mainWindow = mainWindow;
+            this.adminVision = adminVision;
         }
         public bool isDirty = true;
         public static bool canSave = true;
@@ -47,10 +49,24 @@ namespace lab1
         public void GetItems()
         {
             ListItem.Clear();
-            var queryOwners = (from item in DataEntitiesSKLAD.Item
+            var queryOwners = new List<Item>();
+            if (adminVision)
+            {
+                DataGridItem.Columns[1].Visibility = Visibility.Visible;
+                ToAdminMenu.Visibility = Visibility.Visible;
+                queryOwners = (from item in DataEntitiesSKLAD.Item
+                               orderby item.ID_Item
+                               select item).ToList();
+            }
+            else
+            {
+                DataGridItem.Columns[1].Visibility = Visibility.Collapsed;
+                ToAdminMenu.Visibility = Visibility.Collapsed;
+                queryOwners = (from item in DataEntitiesSKLAD.Item
                                where item.ID_Act == act_id
                                orderby item.ID_Item
                                select item).ToList();
+            }
             foreach (Item own in queryOwners)
             {
                 ListItem.Add(own);
@@ -112,7 +128,9 @@ namespace lab1
         {
             if (fw == null)
             {
-                //fw = new FIndWindow(this);
+                fw = new FIndWindow();
+                var ip = new ItemsFindPage(this);
+                fw.Content = ip;
                 fw.Show();
             }
             else
@@ -121,13 +139,81 @@ namespace lab1
             }
             isDirty = true;
         }
-        public void FindByName(string name, string phone, string email)
+        public void FindByID(int id)
         {
             DataEntitiesSKLAD = new SKLAD_WPF();
             ListItem.Clear();
-            var queryOwner = (from owner in DataEntitiesSKLAD.Item
-                              where owner.Name.Contains(name)
-                                select owner).ToList();
+            List<Item> queryOwner;
+            if (adminVision)
+                queryOwner = (from owner in DataEntitiesSKLAD.Item
+                              where owner.ID_Item == id
+                              select owner).ToList();
+            else
+                queryOwner = (from owner in DataEntitiesSKLAD.Item
+                              where owner.ID_Item == id
+                              where owner.ID_Act == act_id
+                              select owner).ToList();
+            foreach (var ow in queryOwner)
+            {
+                ListItem.Add(ow);
+            }
+            if (ListItem.Count > 0)
+            {
+                DataGridItem.ItemsSource = ListItem;
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Поставщики с заданным фильтром не найдены!",
+                    "Внимание!",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                GetItems();
+            }
+        }
+        public void FindByName(FindItem args)
+        {
+            DataEntitiesSKLAD = new SKLAD_WPF();
+            ListItem.Clear();
+            List<Item> queryOwner;
+            if (adminVision)
+            {
+                if (args.specific > 0)
+                    queryOwner = (from owner in DataEntitiesSKLAD.Item
+                                  where owner.Name.Contains(args.Name)
+                                  where owner.Description.Contains(args.Description)
+                                  where owner.Count >= args.count_from && owner.Count <= args.count_to
+                                  where owner.Specific == args.specific
+                                  where owner.Price >= args.price_from && owner.Price <= args.price_to
+                                  select owner).ToList();
+                else
+                    queryOwner = (from owner in DataEntitiesSKLAD.Item
+                                  where owner.Name.Contains(args.Name)
+                                  where owner.Description.Contains(args.Description)
+                                  where owner.Count >= args.count_from && owner.Count <= args.count_to
+                                  where owner.Price >= args.price_from && owner.Price <= args.price_to
+                                  select owner).ToList();
+            }
+            else
+            {
+                if (args.specific > 0)
+                    queryOwner = (from owner in DataEntitiesSKLAD.Item
+                                  where owner.Name.Contains(args.Name)
+                                  where owner.Description.Contains(args.Description)
+                                  where owner.Count >= args.count_from && owner.Count <= args.count_to
+                                  where owner.Specific == args.specific
+                                  where owner.Price >= args.price_from && owner.Price <= args.price_to
+                                  where owner.ID_Act == act_id
+                                  select owner).ToList();
+                else
+                    queryOwner = (from owner in DataEntitiesSKLAD.Item
+                                  where owner.Name.Contains(args.Name)
+                                  where owner.Description.Contains(args.Description)
+                                  where owner.Count >= args.count_from && owner.Count <= args.count_to
+                                  where owner.Price >= args.price_from && owner.Price <= args.price_to
+                                  where owner.ID_Act == act_id
+                                  select owner).ToList();
+            }
             foreach (Item ow in queryOwner)
             {
                 ListItem.Add(ow);
@@ -182,7 +268,7 @@ namespace lab1
 
         private void AddCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = isDirty;
+            e.CanExecute = !adminVision;
 
         }
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -217,15 +303,19 @@ namespace lab1
 
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            //mainWindow.logout = true;
-            //mainWindow.Close();
-            mainWindow.Content = mainWindow.pmain;
+            mainWindow.Content = new PageMain(mainWindow.id, mainWindow);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetItems();
             DataGridItem.SelectedIndex = 0;
+        }
+
+        private void ToAdminMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var am = new AdminPage(mainWindow, mainWindow.id);
+            mainWindow.Content = am;
         }
     }
 }

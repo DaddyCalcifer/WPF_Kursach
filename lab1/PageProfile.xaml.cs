@@ -26,25 +26,25 @@ namespace lab1
         int acc_id = -1;
         Account acc;
         MainWindow mainWindow;
-        PageMain pageMain;
+        Page page_;
         public static bool canSave = false;
 
         public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
         public ObservableCollection<LoadAct> ListActs { get; set; }
-        public PageProfile(MainWindow mw, PageMain pm, int acc_id)
+        public PageProfile(MainWindow mw, Page pm, int acc_id)
         {
             InitializeComponent();
             this.mainWindow = mw;
-            this.pageMain = pm;
+            this.page_ = pm;
             acc = GetAcc(acc_id);
             this.DataContext = acc;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.Content = pageMain;
+            mainWindow.Content = page_;
         }
-        Account GetAcc(int id)
+        public static Account GetAcc(int id)
         {
             var queryActs = (from act in DataEntitiesSKLAD.Account
                              where act.ID_Account == id

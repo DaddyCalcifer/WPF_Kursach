@@ -19,6 +19,8 @@ namespace lab1.Model
         {
             this.LoadAct = new HashSet<LoadAct>();
             this.LoadAct1 = new HashSet<LoadAct>();
+            this.LoadAct2 = new HashSet<LoadAct>();
+            this.Provider = new HashSet<Provider>();
         }
     
         public int ID_Account { get; set; }
@@ -34,5 +36,14 @@ namespace lab1.Model
         public virtual ICollection<LoadAct> LoadAct { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LoadAct> LoadAct1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LoadAct> LoadAct2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Provider> Provider { get; set; }
+        override
+        public string ToString()
+        {
+            return $"{this.Name} ({this.Login})";
+        }
     }
 }

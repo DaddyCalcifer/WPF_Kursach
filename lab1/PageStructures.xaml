@@ -1,4 +1,4 @@
-﻿<Page x:Class="lab1.PageMain"
+﻿<Page x:Class="lab1.PageStructures"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,9 +13,7 @@
       Loaded="Page_Loaded">
     <Page.Resources>
         <DiscreteObjectKeyFrame x:Key="FlagKey" Value="{Binding addedBy}"/>
-        <core:ListStructure x:Key="listStruct"/>
-        <core:ListProvider x:Key="listProv"/>
-        <core:ListAcc x:Key="listAcc"/>
+        <core:ListRole x:Key="listRole"/>
         <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Padding" Value="-2"/>
             <Style.Triggers>
@@ -56,7 +54,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 <Image Source="icons/Undo.png" Height="40" Width="40"></Image>
             </Button>
             <Button Name="Add" ToolTip="Добавить/Создать" Command="New"
-                    Margin="5,2,5,2" Height="50" Width="50">
+                    Margin="5,2,5,2" Height="50" Width="50" Visibility="Visible">
                 <Image Source="icons/Add.png" Height="40" Width="40"></Image>
             </Button>
             <Button Name="Find" ToolTip="Найти" Command="Find"
@@ -64,7 +62,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 <Image Source="icons/Find.png" Height="40" Width="40"></Image>
             </Button>
             <Button Name="Edit" ToolTip="Редактировать" Command="Cut"
-                    Margin="5,2,5,2" Height="50" Width="50">
+                    Margin="5,2,5,2" Height="50" Width="50" Visibility="Visible">
                 <Image Source="icons/Edit.png" Height="40" Width="40"></Image>
             </Button>
             <Button Name="Save" ToolTip="Сохранить" Command="Save"
@@ -73,14 +71,14 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
             </Button>
             <Button Name="Delete" ToolTip="Удалить" Command="Delete"
                     Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Delete.png" Height="40" Width="40"></Image>
+                <Image Source="icons/delete.png" Height="40" Width="40"></Image>
                 <Button.CommandBindings>
                     <CommandBinding Command="Delete"
                         Executed="DeleteCommandBinding_Executed"
                         CanExecute="DeleteCommandBinding_CanExecute" />
                 </Button.CommandBindings>
             </Button>
-            <Separator x:Name="AdminSep"/>
+            <Separator x:Name="AdminSep" Margin="10,0,10,0"/>
             <Button Name="ToAdminMenu" ToolTip="Вернуться в окно администратора"
                     Margin="5,2,5,2" Height="50" Width="50" Click="ToAdminMenu_Click">
                 <Image Source="icons/AdminMenu.png" Height="40" Width="40"></Image>
@@ -98,7 +96,7 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                   AlternatingRowBackground="#FFE6D3EF" 
                   BorderBrush="#FF1F33EB" BorderThickness="3"
                   IsReadOnly="True" RowHeight="25" Cursor="Hand"
-                  AutoGeneratingColumn="OnAutoGeneratingColumn" MouseDoubleClick="DataGridItem_MouseDoubleClick">
+                  AutoGeneratingColumn="OnAutoGeneratingColumn">
             <DataGrid.RowValidationErrorTemplate>
                 <ControlTemplate>
                     <Grid Margin="0,-2,0,-2"
@@ -115,48 +113,17 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 </ControlTemplate>
             </DataGrid.RowValidationErrorTemplate>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Номер акта"
-                    Binding="{Binding ID_Pocket, Mode=OneWay, ValidatesOnExceptions=True,
+                <DataGridTextColumn Header="ID" Width="40"
+                    Binding="{Binding ID_Structure, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Дата разгрузки" Width="130" EditingElementStyle="{StaticResource errorStyle}">
-                    <DataGridTextColumn.Binding >
-                        <Binding Path="LoadDate" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
-                            <Binding.ValidationRules>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-
-                <DataGridComboBoxColumn Header="Склад" Width="110"
-                    ItemsSource="{Binding Source={StaticResource listStruct}}"
-                    DisplayMemberPath="Name"
-                    SelectedValueBinding="{Binding Path=ID_Structure, Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="ID_Structure"/>
-
-                <DataGridComboBoxColumn Header="Поставщик" Width="200"
-                    ItemsSource="{Binding Source={StaticResource listProv}}"
-                    DisplayMemberPath="Name"
-                    SelectedValueBinding="{Binding Path=Provider, Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="ID_Producer"/>
-                <DataGridTextColumn Header="Позиций"
-                    Binding="{Binding Count, Mode=OneWay, ValidatesOnExceptions=True,
+                <DataGridTextColumn Header="Название" Width="200"
+                    Binding="{Binding Name, Mode=TwoWay, ValidatesOnExceptions=True,
+                    UpdateSourceTrigger=PropertyChanged}">
+                </DataGridTextColumn>                <DataGridTextColumn Header="Адрес" Width="500"
+                    Binding="{Binding Adress, Mode=TwoWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Сумма (руб.)"
-                    Binding="{Binding Sum, Mode=OneWay, ValidatesOnExceptions=True,
-                    UpdateSourceTrigger=PropertyChanged}">
-                </DataGridTextColumn>
-                <DataGridComboBoxColumn Header="Принял" Width="200"
-                    ItemsSource="{Binding Source={StaticResource listAcc}}"
-                    DisplayMemberPath="Name"
-                    Visibility="{Binding Value, Source={StaticResource FlagKey}}"
-                    SelectedValueBinding="{Binding Path=AddedBy, Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="ID_Account"/>
-                
             </DataGrid.Columns>
         </DataGrid>
 

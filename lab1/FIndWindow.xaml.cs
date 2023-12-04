@@ -19,8 +19,8 @@ namespace lab1
     /// </summary>
     public partial class FIndWindow : Window
     {
-        public PageMain pm;
-        public FIndWindow(PageMain pm)
+        public PageWorkers pm;
+        public FIndWindow(PageWorkers pm = null)
         {
             InitializeComponent();
             this.pm = pm;
@@ -28,15 +28,20 @@ namespace lab1
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            pm.fw = null;
-            pm.GetActs();
+            if (pm != null) {
+                pm.fw = null;
+                pm.GetActs();
+            }
         }
         void find_act()
         {
             pm.FindByName(
+                loginBox.Text.Trim(),
                 nameBox.Text.Trim(),
                 phoneBox.Text.Trim(),
-                emailBox.Text.Trim());
+                emailBox.Text.Trim(),
+                userTypeBox.SelectedIndex);
+            Console.WriteLine("Выбрана роль: " + (userTypeBox.SelectedIndex).ToString());
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -67,6 +72,16 @@ namespace lab1
             emailBox.Clear();
             nameBox.Clear();
             pm.GetActs();
+        }
+
+        private void userTypeBox_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            loginBox.Clear();
+            find_act();
         }
     }
 }

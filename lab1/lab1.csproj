@@ -189,6 +189,9 @@
     <Compile Include="FIndWindow.xaml.cs">
       <DependentUpon>FIndWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FindActsPage.xaml.cs">
+      <DependentUpon>FindActsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logic\AuthLogic.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
@@ -196,15 +199,24 @@
     <Compile Include="Model\Account.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\FindAct.cs" />
+    <Compile Include="Model\FindItem.cs" />
     <Compile Include="Model\Item.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ListAcc.cs" />
+    <Compile Include="Model\ListAct.cs" />
+    <Compile Include="Model\ListRole.cs" />
+    <Compile Include="Model\ListItem.cs" />
     <Compile Include="Model\ListUserType.cs" />
     <Compile Include="Model\ListUnit.cs" />
     <Compile Include="Model\ListSpecific.cs" />
     <Compile Include="Model\ListProvider.cs" />
     <Compile Include="Model\ListStructure.cs" />
     <Compile Include="Model\LoadAct.cs">
+      <DependentUpon>SKLAD_WPF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Provider.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SKLAD_WPF.Context.cs">
@@ -234,11 +246,30 @@
     <Compile Include="Model\UserType.cs">
       <DependentUpon>SKLAD_WPF.tt</DependentUpon>
     </Compile>
+    <Compile Include="AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageProviders.xaml.cs">
+      <DependentUpon>PageProviders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageStructures.xaml.cs">
+      <DependentUpon>PageStructures.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageProfile.xaml.cs">
       <DependentUpon>PageProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageSklad.xaml.cs">
       <DependentUpon>PageSklad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsFindPage.xaml.cs">
+      <DependentUpon>ItemsFindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageWorkers.xaml.cs" />
+    <Compile Include="StructureFindPage.xaml.cs">
+      <DependentUpon>StructureFindPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProviderFindPage.xaml.cs">
+      <DependentUpon>ProviderFindPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValidationRules\EmptyRule.cs" />
     <Compile Include="ValidationRules\EmailRule.cs" />
@@ -250,6 +281,10 @@
     <Page Include="FIndWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FindActsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="LoginForm.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -270,9 +305,21 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PageProviders.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageStructures.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="PageMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="PageProfile.xaml">
       <SubType>Designer</SubType>
@@ -281,6 +328,22 @@
     <Page Include="PageSklad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemsFindPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageWorkers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StructureFindPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ProviderFindPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -338,6 +401,15 @@
     <Resource Include="icons\User.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="icons\Docs.png" />
+    <Resource Include="icons\Items.png" />
+    <Resource Include="icons\Providers.png" />
+    <Resource Include="icons\Structures.png" />
+    <Resource Include="icons\Workers.png" />
+    <Resource Include="icons\AdminMenu.png" />
+    <Resource Include="icons\ban.png" />
+    <Resource Include="icons\makeadmin.png" />
+    <Resource Include="icons\unban.png" />
     <Content Include="Model\SKLAD_WPF.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SKLAD_WPF.edmx</DependentUpon>

@@ -73,10 +73,14 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                         CanExecute="DeleteCommandBinding_CanExecute" />
                 </Button.CommandBindings>
             </Button>
-            <Separator Margin="25,2,25,2"/>
-            <Button Name="Logout" ToolTip="Сменить пользователя"
+            <Separator/>
+            <Button Name="Logout" ToolTip="Перейти к разгрузкам"
                     Margin="5,2,5,2" Height="50" Width="50" HorizontalAlignment="Right" Click="Logout_Click">
-                <Image Source="icons/logout.png" Height="40" Width="40"></Image>
+                <Image Source="icons/Docs.png" Height="40" Width="40"></Image>
+            </Button>
+            <Button Name="ToAdminMenu" ToolTip="Вернуться в окно администратора"
+                    Margin="5,2,5,2" Height="50" Width="50" Click="ToAdminMenu_Click">
+                <Image Source="icons/AdminMenu.png" Height="40" Width="40"></Image>
             </Button>
         </ToolBar>
         <DataGrid Name="DataGridItem" 
@@ -110,6 +114,10 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Артикул" Width="60"
                     Binding="{Binding ID_Item, Mode=OneWay, ValidatesOnExceptions=True,
+                    UpdateSourceTrigger=PropertyChanged}">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Акт №" Width="50"
+                    Binding="{Binding ID_Act, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Название" Width="100"

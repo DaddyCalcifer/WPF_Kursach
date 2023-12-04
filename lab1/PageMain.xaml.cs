@@ -26,9 +26,8 @@ namespace lab1
         public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
         public ObservableCollection<LoadAct> ListActs { get; set; }
         public MainWindow mw;
-
+        int role;
         int owner_id = -1;
-
         public static int ActSum(LoadAct act)
         {
             int sum = 0;
@@ -57,6 +56,7 @@ namespace lab1
             ListActs = new ObservableCollection<LoadAct>();
             owner_id = owner;
             this.mw = mw;
+            role = (int)PageProfile.GetAcc(owner).Type;
         }
         public bool isDirty = true;
         public static bool canSave = true;
@@ -64,10 +64,23 @@ namespace lab1
         public void GetActs()
         {
             ListActs.Clear();
-            var queryActs = (from act in DataEntitiesSKLAD.LoadAct
-                             where act.ID_Owner == owner_id
+
+            DataGridItem.Columns[6].Visibility = Visibility.Collapsed;
+            AdminSep.Visibility = Visibility.Collapsed;
+            ToAdminMenu.Visibility = Visibility.Collapsed;
+            List<LoadAct> queryActs = (from act in DataEntitiesSKLAD.LoadAct
+                             where act.AddedBy == owner_id
                                orderby act.ID_Pocket
                                select act).ToList();
+            if (role == 3)
+            {
+                DataGridItem.Columns[6].Visibility = Visibility.Visible;
+                AdminSep.Visibility = Visibility.Visible;
+                ToAdminMenu.Visibility = Visibility.Visible;
+                queryActs = (from act in DataEntitiesSKLAD.LoadAct
+                             orderby act.ID_Pocket
+                             select act).ToList();
+            }
             foreach (LoadAct act1 in queryActs)
             {
                 ListActs.Add(act1);
@@ -128,37 +141,114 @@ namespace lab1
         {
             if (fw == null)
             {
-                fw = new FIndWindow(this);
+                fw = new FIndWindow();
+                bool admin = true;
+                if(role == 2)
+                    admin = false;
+                var fp = new FindActsPage(this, owner_id, admin);
+                fw.Content = fp;
                 fw.Show();
             }
             isDirty = true;
         }
-        public void FindByName(string name, string phone, string email)
+        public void FindByID(int id)
         {
-            //DataEntitiesSKLAD = new SKLAD_WPF();
-            //ListActs.Clear();
-            //var queryOwner = (from owner in DataEntitiesSKLAD.Owner
-            //                  where owner.Name.Contains(name)
-            //                  where owner.Phone.Contains(phone)
-            //                  where owner.Email.Contains(email)
-            //                    select owner).ToList();
-            //foreach (Owner ow in queryOwner)
-            //{
-            //    ListOwner.Add(ow);
-            //}
-            //if (ListOwner.Count > 0)
-            //{
-            //    DataGridItem.ItemsSource = ListOwner;
-            //}
-            //else
-            //{
-            //    MessageBox.Show(
-            //        "Владельцы с заданным фильтром не найдены!",
-            //        "Внимание!",
-            //        MessageBoxButton.OK,
-            //        MessageBoxImage.Warning);
-            //    GetOwners();
-            //}
+            DataEntitiesSKLAD = new SKLAD_WPF();
+            ListActs.Clear();
+            var queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.ID_Pocket == id
+                              select owner).ToList();
+            foreach (var ow in queryOwner)
+            {
+                ListActs.Add(ow);
+            }
+            if (ListActs.Count > 0)
+            {
+                DataGridItem.ItemsSource = ListActs;
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Накладные с заданным фильтром не найдены!",
+                    "Внимание!",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                GetActs();
+            }
+        }
+        public void FindByName(FindAct args)
+        {
+            DataEntitiesSKLAD = new SKLAD_WPF();
+            ListActs.Clear();
+            //нет фильтров
+            List<LoadAct> queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                                select owner).ToList();
+            if (args.provider != 0 && args.addedby != 0 && args.structure != 0)
+                //Все
+            queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.AddedBy==args.addedby
+                              where owner.Provider==args.provider
+                              where owner.ID_Structure==args.structure
+                                select owner).ToList();
+            //Поставщик + принял
+            if (args.provider != 0 && args.addedby != 0 && args.structure == 0)
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.AddedBy == args.addedby
+                              where owner.Provider == args.provider
+                              select owner).ToList();
+            //поставщик + склад
+            if (args.provider != 0 && args.structure != 0 && args.addedby == 0)
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.Provider == args.provider
+                              where owner.ID_Structure == args.structure
+                              select owner).ToList();
+            //поставщик
+            if (args.provider != 0 && args.addedby == 0 && args.structure == 0)
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.Provider == args.provider
+                              select owner).ToList();
+            //Склад
+            if (args.structure != 0 && args.addedby == 0 && args.provider == 0)
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.ID_Structure == args.structure
+                              select owner).ToList();
+            //Принял
+            if (args.addedby != 0 && args.provider == 0 && args.structure == 0)
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.AddedBy == args.addedby
+                              select owner).ToList();
+            //Принял + склад
+            if (args.addedby != 0 && args.structure != 0 && args.provider == 0)
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                              where owner.AddedBy == args.addedby
+                              where owner.ID_Structure == args.structure
+                              select owner).ToList();
+            foreach (var ow in queryOwner)
+            {
+                ListActs.Add(ow);
+            }
+            if (ListActs.Count > 0)
+            {
+                DataGridItem.ItemsSource = ListActs;
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Накладные с заданным фильтром не найдены!",
+                    "Внимание!",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                GetActs();
+            }
+            Console.WriteLine("xd" + args.provider);
         }
 
         private void FindCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -170,10 +260,11 @@ namespace lab1
         {
             //MessageBox.Show("Создание");
             LoadAct act = new LoadAct();
-            act.ID_Owner = owner_id;
+            act.ID_Owner = 1;
             act.LoadDate = DateTime.Now;
             act.Provider = 1;
             act.ID_Structure = 1;
+            act.AddedBy = owner_id;
             AddAct(act);
         }
         public void AddAct(LoadAct act)
@@ -257,6 +348,12 @@ namespace lab1
         {
             mw.logout = true;
             mw.Close();
+        }
+
+        private void ToAdminMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var am = new AdminPage(mw, owner_id);
+            mw.Content = am;
         }
     }
 }

@@ -8,14 +8,14 @@ using System.Data.Entity;
 
 namespace lab1.Model
 {
-    public class ListProvider : ObservableCollection<Provider>
+    public class ListAcc : ObservableCollection<Account>
     {
-        public ListProvider()
+        public ListAcc()
         {
-            DbSet<Provider> accs = PageMain.DataEntitiesSKLAD.Provider;
+            DbSet<Account> accs = PageMain.DataEntitiesSKLAD.Account;
             var queryAcc = (from acc in accs
                              select acc);
-            foreach (Provider accc in queryAcc)
+            foreach (Account accc in queryAcc)
             {
                 this.Add(accc);
             }
