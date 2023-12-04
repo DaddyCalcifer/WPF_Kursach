@@ -21,11 +21,13 @@ namespace lab1.ValidationRules
             if (email.Contains("@") && email.Contains("."))
             {
                 PageProfile.canSave = true;
+                LoginForm.canRegister = true;
                 return new ValidationResult(true, null);
             }
             else
             {
                 PageProfile.canSave = false;
+                LoginForm.canRegister= false;
                 return new ValidationResult(false,
                    "Адрес электронной почты должен содержать символы @ и(.) точки \n Шаблон адреса: adress@mymail.com");
             }

@@ -22,11 +22,22 @@ namespace lab1
     public partial class LoginForm : Window
     {
         Account account;
+        LoginData rmm = new LoginData();
+        public static bool canRegister = true;
         public LoginForm()
         {
             InitializeComponent();
             account = new Account();
             this.DataContext = account;
+            //LoginData lg = new LoginData();
+            var loginfo = RememberMeManager.ReadLoginData();
+            rememberMe.IsChecked = loginfo.AutoLogin;
+            logLoginBox.Text = loginfo.Login;
+            logPasswordBox.Password = loginfo.Password;
+            if(loginfo.AutoLogin==true)
+            {
+                doLogin(loginfo.Login,loginfo.Password);
+            }
         }
 
         private void registerButton_Click(object sender, RoutedEventArgs e)
@@ -34,6 +45,7 @@ namespace lab1
             AuthLogic auth = new AuthLogic();
             Account account = new Account();
 
+            if(canRegister)
             if (regLoginBox.Text.Trim() != "" &&
                 regNameBox.Text.Trim() != "" &&
                 regPasswordBox1.Text.Trim() != "" &&
@@ -57,10 +69,21 @@ namespace lab1
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            doLogin(logLoginBox.Text.Trim(), logPasswordBox.Password.Trim());
+        }
+        public void doLogin(string login, string pass)
+        {
             AuthLogic auth = new AuthLogic();
-            int id = auth.Login(logLoginBox.Text.Trim(), logPasswordBox.Password.Trim());
+            int id = auth.Login(login, pass);
             if (id != -1)
             {
+                rmm.Login = login; 
+                rmm.Password = "";
+                rmm.LastLogin = DateTime.Now;
+                rmm.AutoLogin = rememberMe.IsChecked;
+                if (rememberMe.IsChecked == true)
+                    rmm.Password = pass;
+                RememberMeManager.SaveLoginData(rmm);
                 MainWindow mw = new MainWindow(id);
                 this.Hide();
                 mw.ShowDialog();
@@ -81,6 +104,12 @@ namespace lab1
 
         private void logShowPasswordBox_Copy_TextChanged(object sender, TextChangedEventArgs e)
         {
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            rmm.AutoLogin = rememberMe.IsChecked;
+            RememberMeManager.SaveLoginData(rmm);
         }
     }
 }

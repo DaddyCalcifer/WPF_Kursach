@@ -28,7 +28,7 @@
                 <Label Content="Имя" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="94" FontSize="18"/>
                 <TextBox HorizontalAlignment="Right" Margin="0,125,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="33" FontSize="18">
                     <TextBox.Text>
-                        <Binding Path="Email">
+                        <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <rule:EmailRule/>
                             </Binding.ValidationRules>
@@ -38,7 +38,7 @@
                 <Label Content="E-mail" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top" Width="94" FontSize="18"/>
                 <TextBox HorizontalAlignment="Right" Margin="0,178,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" Height="33" FontSize="18">
                     <TextBox.Text>
-                        <Binding Path="Phone">
+                        <Binding Path="Phone" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <rule:PhoneRule/>
                             </Binding.ValidationRules>

@@ -41,7 +41,6 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 <Separator/>
                 <MenuItem Header="Удалить" Command="Delete"/>
             </MenuItem>
-            <MenuItem Header="Отчёт"/>
             <MenuItem Header="Аккаунт">
                 <MenuItem Header="Открыть профиль" Click="MenuItem_Click"/>
                 <Separator/>
@@ -120,11 +119,16 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 <DataGridTextColumn Header="Название" Width="200"
                     Binding="{Binding Name, Mode=TwoWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
-                </DataGridTextColumn>                <DataGridTextColumn Header="Телефон" Width="500"
-                    Binding="{Binding Phone, Mode=TwoWay, ValidatesOnExceptions=True,
-                    UpdateSourceTrigger=PropertyChanged}">
+                </DataGridTextColumn>                <DataGridTextColumn Header="Телефон" Width="150" EditingElementStyle="{StaticResource errorStyle}">
+                    <DataGridTextColumn.Binding >
+                        <Binding Path="Phone" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
+                            <Binding.ValidationRules>
+                                <rule:PhoneRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                
+
             </DataGrid.Columns>
         </DataGrid>
 

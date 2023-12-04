@@ -53,9 +53,17 @@ namespace lab1.Logic
             {
                 ListAcc.Add(ac);
             }
-            if (BCrypt.Net.BCrypt.Verify(password, ListAcc.Last().Password))
-                return ListAcc.Last().ID_Account;
-            else return -1;
+            try
+            {
+                if (BCrypt.Net.BCrypt.Verify(password, ListAcc.Last().Password))
+                    return ListAcc.Last().ID_Account;
+                else return -1;
+            }
+            catch
+            {
+                RememberMeManager.DeleteAuthFile();
+                return -1;
+            }
         }
     }
 }
