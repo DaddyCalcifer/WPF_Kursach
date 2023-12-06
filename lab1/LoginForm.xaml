@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:lab1"
         xmlns:rule="clr-namespace:lab1.ValidationRules"
         mc:Ignorable="d"
-        Title="Авторизация" Height="454" Width="315" Closed="Window_Closed">
+        Title="Авторизация" Height="485" Width="315" Closed="Window_Closed">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -244,19 +244,19 @@
     <Grid>
         <TabControl>
             <TabItem Header="Авторизация">
-                <Grid Background="#FFB4B4C8">
+                <Grid Background="#eaeaea">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="62*"/>
                         <ColumnDefinition Width="247*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Style="{DynamicResource TextBoxStyle1}" x:Name="logLoginBox" HorizontalAlignment="Left" Margin="27,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" Height="35" FontSize="18" Grid.ColumnSpan="2">
+                    <TextBox x:Name="logLoginBox" HorizontalAlignment="Left" Margin="27,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="255" Height="35" FontSize="18" Grid.ColumnSpan="2">
                     </TextBox>
                     <Label Content="Логин" HorizontalAlignment="Left" Margin="27,55,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Verdana" Grid.ColumnSpan="2"/>
-                    <PasswordBox Style="{DynamicResource TextBoxStyle}" x:Name="logPasswordBox" HorizontalAlignment="Left" Margin="27,185,0,0" VerticalAlignment="Top" Width="255" Height="35" FontSize="18" PasswordChanged="logPasswordBox_PasswordChanged" Grid.ColumnSpan="2"/>
+                    <PasswordBox x:Name="logPasswordBox" HorizontalAlignment="Left" Margin="27,185,0,0" VerticalAlignment="Top" Width="255" Height="35" FontSize="18" PasswordChanged="logPasswordBox_PasswordChanged" Grid.ColumnSpan="2"/>
 
                     <Label Content="Пароль" HorizontalAlignment="Left" Margin="27,145,0,0" VerticalAlignment="Top" FontSize="18" FontFamily="Verdana" Grid.ColumnSpan="2"/>
                     <CheckBox Visibility="Hidden" x:Name="showPassword" Content="Показать пароль" HorizontalAlignment="Left" Margin="27,239,0,0" VerticalAlignment="Top" FontSize="16" Checked="showPassword_Checked" Grid.ColumnSpan="2"/>
-                    <CheckBox Style="{DynamicResource CheckBoxStyle1}" x:Name="rememberMe" Content="Запомнить меня?" HorizontalAlignment="Left" Margin="27,264,0,0" VerticalAlignment="Top" FontSize="16" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="rememberMe" Content="Запомнить меня?" HorizontalAlignment="Left" Margin="27,264,0,0" VerticalAlignment="Top" FontSize="16" Grid.ColumnSpan="2"/>
                     <Button Style="{DynamicResource logButton}" x:Name="loginButton" Content="Вход" HorizontalAlignment="Left" Margin="27,323,0,0" VerticalAlignment="Top" Height="50" Width="255" FontSize="20" Click="loginButton_Click" Foreground="White" Grid.ColumnSpan="2">
                         <Button.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -268,8 +268,8 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Регистрация">
-                <Grid Background="#FFB4B4C8">
-                    <TextBox x:Name="regNameBox" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
+                <Grid Background="#eaeaea">
+                    <TextBox x:Name="regNameBox" HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
                         <TextBox.Text>
                             <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules >
@@ -279,7 +279,7 @@
                         </TextBox.Text>
                     </TextBox>
                     <Label Content="Имя" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
-                    <TextBox x:Name="regEmailBox" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" Margin="0,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
+                    <TextBox x:Name="regEmailBox" HorizontalAlignment="Center" Margin="0,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
                         <TextBox.Text>
                             <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -289,7 +289,7 @@
                         </TextBox.Text>
                     </TextBox>
                     <Label Content="Электронная почта" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
-                    <TextBox x:Name="regLoginBox" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" Margin="0,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
+                    <TextBox x:Name="regLoginBox" HorizontalAlignment="Center" Margin="0,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
                         <TextBox.Text>
                             <Binding Path="Login" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -299,11 +299,11 @@
                         </TextBox.Text>
                     </TextBox>
                     <Label Content="Логин" HorizontalAlignment="Left" Margin="10,142,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
-                    <TextBox x:Name="regPasswordBox1" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" Margin="0,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
+                    <TextBox x:Name="regPasswordBox1" HorizontalAlignment="Center" Margin="0,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14">
 
                     </TextBox>
                     <Label Content="Пароль" HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
-                    <TextBox x:Name="regPasswordBox2" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" Margin="0,306,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14"/>
+                    <TextBox x:Name="regPasswordBox2" HorizontalAlignment="Center" Margin="0,306,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="289" Height="29" FontSize="14"/>
                     <Label Content="Повторите пароль" HorizontalAlignment="Left" Margin="10,274,0,0" VerticalAlignment="Top" FontSize="14" FontFamily="Verdana" Height="27"/>
                     <Button x:Name="registerButton" Style="{DynamicResource logButton}" Content="Регистрация" HorizontalAlignment="Center" Margin="0,356,0,0" VerticalAlignment="Top" Height="29" Width="289" Click="registerButton_Click" Foreground="White">
                         <Button.Background>

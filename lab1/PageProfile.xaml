@@ -11,7 +11,7 @@
       Title="PageProfile">
 
     <Grid Background="LightGray">
-        <GroupBox Background="White" Header="Данные профиля" Margin="10, 10, 400, 10" FontSize="15">
+        <GroupBox Background="White" Header="Данные профиля" Margin="10, 10, 400, 10" FontSize="15" MaxWidth="500">
             <Grid Margin="0,0,-12,0">
                 <TextBox IsReadOnly="True" HorizontalAlignment="Right" Margin="0,10,20,0" TextWrapping="Wrap" Text="{Binding Path=Login}" VerticalAlignment="Top" Width="230" Height="33" FontSize="18">
                 </TextBox>
@@ -47,14 +47,11 @@
                 </TextBox>
                 <Label Content="Телефон" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top" Width="94" FontSize="18"/>
 
-                <Button IsEnabled="{Binding Path=canSave}" Style="{DynamicResource RoundedButton}" Foreground="White" Background="Green" Content="Сохранить изменения" Margin="0,279,0,10" VerticalAlignment="Bottom" Height="64" FontSize="20" FontFamily="Arial" HorizontalAlignment="Center" Width="250" Click="Button_Click_1"/>
+                <Button IsEnabled="{Binding Path=canSave}" Foreground="White" Content="Сохранить изменения" Margin="0,279,0,10" VerticalAlignment="Bottom" Height="64" FontSize="20" FontFamily="Arial" HorizontalAlignment="Center" Width="250" Click="Button_Click_1"/>
 
             </Grid>
         </GroupBox>
-        <Button x:Name="backButton" Style="{DynamicResource RoundedButton}" Content="&lt;" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Height="60" Width="60" FontSize="22" FontFamily="Arial" FontWeight="Normal" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="backButton_MouseLeave">
-            <Button.Background>
-                <SolidColorBrush Color="#FF180DEE"/>
-            </Button.Background>
+        <Button x:Name="backButton" Content="&lt;" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Height="60" Width="60" FontSize="22" FontFamily="Arial" FontWeight="Normal" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="backButton_MouseLeave">
         </Button>
 
     </Grid>

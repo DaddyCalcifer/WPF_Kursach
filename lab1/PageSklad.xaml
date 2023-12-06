@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:lab1"
       xmlns:command="clr-namespace:lab1.Commands"
       xmlns:rule="clr-namespace:lab1.ValidationRules"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageMain"
@@ -44,28 +45,22 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
         </Menu>
         <ToolBar Name="ToolBar1" Margin="3" Height="60">
             <Button Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Undo.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Undo}">
             </Button>
             <Button Name="Add" ToolTip="Добавить/Создать" Command="New"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Add.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Add}">
             </Button>
             <Button Name="Find" ToolTip="Найти" Command="Find"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Find.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Search}">
             </Button>
             <Button Name="Edit" ToolTip="Редактировать" Command="Cut"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Edit.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Edit}">
             </Button>
             <Button Name="Save" ToolTip="Сохранить" Command="Save"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Save.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=ContentSave}">
             </Button>
             <Button Name="Delete" ToolTip="Удалить" Command="Delete"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Delete.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Delete}">
                 <Button.CommandBindings>
                     <CommandBinding Command="Delete"
                         Executed="DeleteCommandBinding_Executed"
@@ -74,26 +69,19 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
             </Button>
             <Separator/>
             <Button Name="Logout" ToolTip="Перейти к разгрузкам"
-                    Margin="5,2,5,2" Height="50" Width="50" HorizontalAlignment="Right" Click="Logout_Click">
-                <Image Source="icons/Docs.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=ArrowBack}" HorizontalAlignment="Right" Click="Logout_Click">
             </Button>
             <Button Name="ToAdminMenu" ToolTip="Вернуться в окно администратора"
-                    Margin="5,2,5,2" Height="50" Width="50" Click="ToAdminMenu_Click">
-                <Image Source="icons/AdminMenu.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=MenuOpen}" Click="ToAdminMenu_Click">
             </Button>
         </ToolBar>
-        <DataGrid Name="DataGridItem" 
-                  Width="798" 
-                  Height="500" 
-                  MaxHeight="295" 
-                  MaxWidth="1000" 
+        <DataGrid Name="DataGridItem"  
                   ItemsSource="{Binding}"
                   AutoGenerateColumns="False" 
                   HorizontalAlignment="Left" 
-                  RowBackground="#FC96CFD4"
-                  AlternatingRowBackground="#FFE6D3EF" 
-                  BorderBrush="#FF1F33EB" BorderThickness="3"
-                  IsReadOnly="True" RowHeight="25" Cursor="Hand">
+                  RowBackground="White"
+                  AlternatingRowBackground="#eaeaea"
+                  IsReadOnly="True" RowHeight="40" Cursor="Hand">
             <DataGrid.RowValidationErrorTemplate>
                 <ControlTemplate>
                     <Grid Margin="0,-2,0,-2"
@@ -111,34 +99,34 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
             </DataGrid.RowValidationErrorTemplate>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Артикул" Width="60"
+                <DataGridTextColumn Header="Артикул" Width="100"
                     Binding="{Binding ID_Item, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Акт №" Width="50"
+                <DataGridTextColumn Header="Акт №" Width="100"
                     Binding="{Binding ID_Act, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Название" Width="100"
+                <DataGridTextColumn Header="Название" Width="150"
                     Binding="{Binding Name, Mode=TwoWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Описание" Width="330" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="Описание" Width="350" EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
                         <Binding Path="Description" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
 
-                <DataGridComboBoxColumn Header="Специфика"
+                <DataGridComboBoxColumn Header="Специфика" Width="130"
                     ItemsSource="{Binding Source={StaticResource listSpec}}"
                     DisplayMemberPath="Name"
                     SelectedValueBinding="{Binding Path=Specific, Mode=TwoWay,
                     UpdateSourceTrigger=PropertyChanged}"
                                         SelectedValuePath="ID_Specific"/>
 
-                <DataGridTextColumn Header="Кол-во" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="Кол-во" Width="100" EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
                         <Binding Path="Count" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                             <Binding.ValidationRules>
@@ -147,14 +135,14 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 
-                <DataGridComboBoxColumn Header="Ед."
+                <DataGridComboBoxColumn Header="Ед." Width="70"
                     ItemsSource="{Binding Source={StaticResource listUnit}}"
                     DisplayMemberPath="Name"
                     SelectedValueBinding="{Binding Path=Unit, Mode=TwoWay,
                     UpdateSourceTrigger=PropertyChanged}"
                                         SelectedValuePath="ID_Unit"/>
 
-                <DataGridTextColumn Header="Стоимость (руб.)" Width="120" EditingElementStyle="{StaticResource errorStyle}">
+                <DataGridTextColumn Header="Стоимость (руб.)" Width="170" EditingElementStyle="{StaticResource errorStyle}">
                     <DataGridTextColumn.Binding >
                         <Binding Path="Price" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
                             <Binding.ValidationRules>

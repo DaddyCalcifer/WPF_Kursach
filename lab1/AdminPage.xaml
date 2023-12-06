@@ -106,8 +106,8 @@
                 <ToolTip>Данные о поставщиках</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button Content="{StaticResource UserImage}" x:Name="ProfileButton" Style="{StaticResource RoundedButton}" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Height="60" Width="60" Click="Button_Click" MouseEnter="ProfileButton_MouseEnter" MouseLeave="ProfileButton_MouseLeave">
+        <Button Content="{StaticResource UserImage}" x:Name="ProfileButton" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Height="60" Width="60" Click="Button_Click" MouseEnter="ProfileButton_MouseEnter" MouseLeave="ProfileButton_MouseLeave">
         </Button>
-        <Button Content="{StaticResource ChangeUserImage}" x:Name="ChangeUser" Style="{StaticResource ResourceKey=RoundedButton}" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Height="60" Width="60" MouseEnter="ChangeUser_MouseEnter" MouseLeave="ChangeUser_MouseLeave" Click="ChangeUser_Click"/>
+        <Button Content="{StaticResource ChangeUserImage}" x:Name="ChangeUser" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Height="60" Width="60" MouseEnter="ChangeUser_MouseEnter" MouseLeave="ChangeUser_MouseLeave" Click="ChangeUser_Click"/>
     </Grid>
 </Page>

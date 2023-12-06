@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:lab1"
       xmlns:command="clr-namespace:lab1.Commands"
       xmlns:rule="clr-namespace:lab1.ValidationRules"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageMain"
@@ -49,29 +50,25 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
         </Menu>
         <ToolBar Name="ToolBar1" Margin="3" Height="60">
             <Button Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Undo.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Undo}">
             </Button>
             <Button Name="Add" ToolTip="Добавить/Создать" Command="New"
                     Margin="5,2,5,2" Height="50" Width="50" Visibility="Collapsed">
                 <Image Source="icons/Add.png" Height="40" Width="40"></Image>
             </Button>
             <Button Name="Find" ToolTip="Найти" Command="Find"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Find.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=Search}">
             </Button>
             <Button Name="Edit" ToolTip="Редактировать" Command="Cut"
                     Margin="5,2,5,2" Height="50" Width="50" Visibility="Collapsed">
                 <Image Source="icons/Edit.png" Height="40" Width="40"></Image>
             </Button>
             <Button Name="Save" ToolTip="Сохранить" Command="Save"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/Save.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=ContentSave}">
             </Button>
             <Separator/>
             <Button Name="Delete" ToolTip="Удалить" Command="Delete"
-                    Margin="5,2,5,2" Height="50" Width="50">
-                <Image Source="icons/ban.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=AccountCancel}">
                 <Button.CommandBindings>
                     <CommandBinding Command="Delete"
                         Executed="DeleteCommandBinding_Executed"
@@ -79,31 +76,23 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 </Button.CommandBindings>
             </Button>
             <Button Name="Unban" ToolTip="Разблокировать"
-                    Margin="5,2,5,2" Height="50" Width="50" Click="Unban_Click">
-                <Image Source="icons/unban.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=AccountCache}" Click="Unban_Click">
             </Button>
             <Button Name="MakeAdmin" ToolTip="Сделать администратором"
-                    Margin="5,2,5,2" Height="50" Width="50" Click="MakeAdmin_Click">
-                <Image Source="icons/makeadmin.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=AccountHardHat}" Click="MakeAdmin_Click">
             </Button>
             <Separator x:Name="AdminSep" Margin="10,0,10,0"/>
             <Button Name="ToAdminMenu" ToolTip="Вернуться в окно администратора"
-                    Margin="5,2,5,2" Height="50" Width="50" Click="ToAdminMenu_Click">
-                <Image Source="icons/AdminMenu.png" Height="40" Width="40"></Image>
+                    Margin="5,2,5,2" Content="{materialDesign:PackIcon Kind=MenuOpen}" Click="ToAdminMenu_Click">
             </Button>
         </ToolBar>
-        <DataGrid Name="DataGridItem" 
-                  Width="800" 
-                  Height="500" 
-                  MaxHeight="295" 
-                  MaxWidth="1000" 
+        <DataGrid Name="DataGridItem"  
                   ItemsSource="{Binding}"
                   AutoGenerateColumns="False" 
                   HorizontalAlignment="Left" 
-                  RowBackground="#FC96CFD4"
-                  AlternatingRowBackground="#FFE6D3EF" 
-                  BorderBrush="#FF1F33EB" BorderThickness="3"
-                  IsReadOnly="True" RowHeight="25" Cursor="Hand"
+                  RowBackground="White"
+                  AlternatingRowBackground="#eaeaea"
+                  IsReadOnly="True" RowHeight="40" Cursor="Hand"
                   AutoGeneratingColumn="OnAutoGeneratingColumn">
             <DataGrid.RowValidationErrorTemplate>
                 <ControlTemplate>
@@ -121,21 +110,21 @@ Path=(Validation.Errors)[0].ErrorContent}"/>
                 </ControlTemplate>
             </DataGrid.RowValidationErrorTemplate>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="40"
+                <DataGridTextColumn Header="ID" Width="100"
                     Binding="{Binding ID_Account, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Логин" Width="100"
+                <DataGridTextColumn Header="Логин" Width="150"
                     Binding="{Binding Login, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
-                </DataGridTextColumn>                <DataGridTextColumn Header="Имя" Width="100"
+                </DataGridTextColumn>                <DataGridTextColumn Header="Имя" Width="200"
                     Binding="{Binding Name, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
-                </DataGridTextColumn>                <DataGridTextColumn Header="E-mail" Width="170"
+                </DataGridTextColumn>                <DataGridTextColumn Header="E-mail" Width="220"
                     Binding="{Binding Email, Mode=OneWay, ValidatesOnExceptions=True,
                     UpdateSourceTrigger=PropertyChanged}">
                 </DataGridTextColumn>
-                <DataGridComboBoxColumn Header="Роль" Width="110"
+                <DataGridComboBoxColumn Header="Роль" Width="140"
                     ItemsSource="{Binding Source={StaticResource listRole}}"
                     DisplayMemberPath="Name"
                     SelectedValueBinding="{Binding Path=Type, Mode=TwoWay,
