@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:lab1"
         xmlns:core="clr-namespace:lab1.Model"
         mc:Ignorable="d"
+        MinHeight="400" MinWidth="1"
         Title="Складской учёт" Height="600" Width="1000" Closing="Window_Closing" Closed="Window_Closed">
     <Grid Name="grid">
         <Frame Name="frame1" Margin="3" Loaded="frame1_Loaded" Navigated="frame1_Navigated"/>

@@ -38,6 +38,7 @@ namespace lab1
             this.page_ = pm;
             acc = GetAcc(acc_id);
             this.DataContext = acc;
+            mw.MinWidth = 800;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
