@@ -20,5 +20,7 @@ namespace lab1.Model
         public Nullable<int> AddedBy { get; set; }
     
         public virtual Account Account { get; set; }
+        override
+        public string ToString() => this.Name;
     }
 }

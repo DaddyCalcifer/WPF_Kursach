@@ -26,5 +26,8 @@ namespace lab1.Model
         public virtual LoadAct LoadAct { get; set; }
         public virtual Unit Unit1 { get; set; }
         public virtual Specific Specific1 { get; set; }
+
+        override
+        public string ToString() => this.Name;
     }
 }
