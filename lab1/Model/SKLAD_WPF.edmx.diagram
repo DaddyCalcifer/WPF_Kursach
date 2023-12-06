@@ -6,11 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="0638f9ca5bf9470fb184292d3c05b73b" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="SKLAD_WPFModel.Account" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SKLAD_WPFModel.Item" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SKLAD_WPFModel.LoadAct" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SKLAD_WPFModel.Specific" Width="1.5" PointX="8.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SKLAD_WPFModel.Structure" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SKLAD_WPFModel.Unit" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.Item" Width="1.5" PointX="8.875" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.LoadAct" Width="1.5" PointX="6.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.Specific" Width="1.5" PointX="9" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.Structure" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.Unit" Width="1.5" PointX="11.625" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SKLAD_WPFModel.UserType" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__Account__Type__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__ID_Owne__5AEE82B9" ManuallyRouted="false" />
@@ -19,7 +19,7 @@
         <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__ID_Stru__59FA5E80" ManuallyRouted="false" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__Item__Specific__619B8048" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__Provide__628FA481" />
-        <EntityTypeShape EntityType="SKLAD_WPFModel.Provider" Width="1.5" PointX="5.25" PointY="8.625" />
+        <EntityTypeShape EntityType="SKLAD_WPFModel.Provider" Width="1.5" PointX="3" PointY="5.5" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__LoadAct__AddedBy__66603565" />
         <AssociationConnector Association="SKLAD_WPFModel.FK__Provider__AddedB__656C112C" />
       </Diagram>

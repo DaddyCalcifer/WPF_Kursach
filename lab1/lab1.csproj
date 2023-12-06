@@ -220,6 +220,7 @@
     </Compile>
     <Compile Include="Logic\AuthLogic.cs" />
     <Compile Include="Logic\RememberMeManager.cs" />
+    <Compile Include="Logic\WorkerManager.cs" />
     <Compile Include="LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>

@@ -12,7 +12,7 @@ namespace lab1.Model
     {
         public ListAcc()
         {
-            DbSet<Account> accs = PageMain.DataEntitiesSKLAD.Account;
+            DbSet<Account> accs = lab1.Logic.WorkerManager.DataEntitiesSKLAD.Account;
             var queryAcc = (from acc in accs
                              select acc);
             foreach (Account accc in queryAcc)

@@ -26,21 +26,15 @@ namespace lab1.Model
         public Nullable<int> ID_Owner { get; set; }
         public Nullable<int> Provider { get; set; }
         public Nullable<int> AddedBy { get; set; }
-
         public Nullable<int> Sum
         {
-            get
-            {
-                return PageMain.ActSum(this);
-            }
+            get => lab1.Logic.WorkerManager.ActSum(this);
         }
         public Nullable<int> Count
         {
-            get
-            {
-                return PageMain.ActCount(this);
-            }
+            get => lab1.Logic.WorkerManager.ActCount(this);
         }
+
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Item { get; set; }

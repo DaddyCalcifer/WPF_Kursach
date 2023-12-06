@@ -23,36 +23,15 @@ namespace lab1
     /// </summary>
     public partial class PageMain : Page
     {
-        public static SKLAD_WPF DataEntitiesSKLAD { get; set; } = new SKLAD_WPF();
+        public static SKLAD_WPF DataEntitiesSKLAD;
         public ObservableCollection<LoadAct> ListActs { get; set; }
         public MainWindow mw;
         int role;
         int owner_id = -1;
-        public static int ActSum(LoadAct act)
-        {
-            int sum = 0;
-            var queryActs = (from ite in DataEntitiesSKLAD.Item
-                             orderby ite.ID_Item
-                             where ite.ID_Act == act.ID_Pocket
-                             select ite).ToList();
-            foreach (Item itt in queryActs)
-            {
-                sum += itt.Price;
-            }
-            return sum;
-        }
-        public static int ActCount(LoadAct act)
-        {
-            var queryActs = (from ite in DataEntitiesSKLAD.Item
-                             orderby ite.ID_Item
-                             where ite.ID_Act == act.ID_Pocket
-                             select ite).ToList();
-            return queryActs.Count();
-        }
         public PageMain(int owner, MainWindow mw)
         {
             InitializeComponent();
-            DataEntitiesSKLAD = new SKLAD_WPF();
+            DataEntitiesSKLAD = lab1.Logic.WorkerManager.DataEntitiesSKLAD;
             ListActs = new ObservableCollection<LoadAct>();
             owner_id = owner;
             this.mw = mw;
@@ -69,9 +48,9 @@ namespace lab1
             AdminSep.Visibility = Visibility.Collapsed;
             ToAdminMenu.Visibility = Visibility.Collapsed;
             List<LoadAct> queryActs = (from act in DataEntitiesSKLAD.LoadAct
-                             where act.AddedBy == owner_id
-                               orderby act.ID_Pocket
-                               select act).ToList();
+                                       where act.AddedBy == owner_id
+                                       orderby act.ID_Pocket
+                                       select act).ToList();
             if (role == 3)
             {
                 DataGridItem.Columns[6].Visibility = Visibility.Visible;
@@ -143,7 +122,7 @@ namespace lab1
             {
                 fw = new FIndWindow();
                 bool admin = true;
-                if(role == 2)
+                if (role == 2)
                     admin = false;
                 var fp = new FindActsPage(this, owner_id, admin);
                 fw.Content = fp;
@@ -182,16 +161,16 @@ namespace lab1
             ListActs.Clear();
             //нет фильтров
             List<LoadAct> queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
-                              where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
-                                select owner).ToList();
+                                        where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
+                                        select owner).ToList();
             if (args.provider != 0 && args.addedby != 0 && args.structure != 0)
                 //Все
-            queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
+                queryOwner = (from owner in DataEntitiesSKLAD.LoadAct
                               where owner.LoadDate >= args.from_ && owner.LoadDate <= args.till
-                              where owner.AddedBy==args.addedby
-                              where owner.Provider==args.provider
-                              where owner.ID_Structure==args.structure
-                                select owner).ToList();
+                              where owner.AddedBy == args.addedby
+                              where owner.Provider == args.provider
+                              where owner.ID_Structure == args.structure
+                              select owner).ToList();
             //Поставщик + принял
             if (args.provider != 0 && args.addedby != 0 && args.structure == 0)
                 queryOwner = (from owner in DataEntitiesSKLAD.LoadAct

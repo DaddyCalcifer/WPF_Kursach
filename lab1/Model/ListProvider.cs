@@ -12,7 +12,7 @@ namespace lab1.Model
     {
         public ListProvider()
         {
-            DbSet<Provider> accs = PageMain.DataEntitiesSKLAD.Provider;
+            DbSet<Provider> accs = lab1.Logic.WorkerManager.DataEntitiesSKLAD.Provider;
             var queryAcc = (from acc in accs
                              select acc);
             foreach (Provider accc in queryAcc)

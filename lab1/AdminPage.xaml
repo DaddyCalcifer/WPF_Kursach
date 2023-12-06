@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:lab1"
       xmlns:core="clr-namespace:lab1.Model"
       xmlns:rule="clr-namespace:lab1.ValidationRules"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="800"
       Title="PageProfile">
@@ -106,8 +108,8 @@
                 <ToolTip>Данные о поставщиках</ToolTip>
             </Button.ToolTip>
         </Button>
-        <Button Content="{StaticResource UserImage}" x:Name="ProfileButton" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Height="60" Width="60" Click="Button_Click" MouseEnter="ProfileButton_MouseEnter" MouseLeave="ProfileButton_MouseLeave">
+        <Button Style="{DynamicResource AdminButton}" Content="{materialDesign:PackIcon Kind=Account}" x:Name="ProfileButton" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Height="60" Width="60" Click="Button_Click" MouseEnter="ProfileButton_MouseEnter" MouseLeave="ProfileButton_MouseLeave" Cursor="Hand">
         </Button>
-        <Button Content="{StaticResource ChangeUserImage}" x:Name="ChangeUser" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Height="60" Width="60" MouseEnter="ChangeUser_MouseEnter" MouseLeave="ChangeUser_MouseLeave" Click="ChangeUser_Click"/>
+        <Button Style="{DynamicResource AdminButton}" Content="{materialDesign:PackIcon Kind=ExitRun}" x:Name="ChangeUser" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Height="60" Width="60" MouseEnter="ChangeUser_MouseEnter" MouseLeave="ChangeUser_MouseLeave" Click="ChangeUser_Click"/>
     </Grid>
 </Page>

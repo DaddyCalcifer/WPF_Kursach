@@ -12,7 +12,7 @@ namespace lab1.Model
     {
         public ListStructure()
         {
-            DbSet<Structure> structs = PageMain.DataEntitiesSKLAD.Structure;
+            DbSet<Structure> structs = lab1.Logic.WorkerManager.DataEntitiesSKLAD.Structure;
             var querySpec = from spec in structs select spec;
             foreach (Structure specc in querySpec)
             {

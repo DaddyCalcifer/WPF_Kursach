@@ -12,7 +12,7 @@ namespace lab1.Model
     {
         public ListSpecific()
         {
-            DbSet<Specific> specifics = PageMain.DataEntitiesSKLAD.Specific;
+            DbSet<Specific> specifics = lab1.Logic.WorkerManager.DataEntitiesSKLAD.Specific;
             var querySpec = from spec in specifics select spec;
             foreach (Specific specc in querySpec)
             {

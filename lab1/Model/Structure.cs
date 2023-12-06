@@ -27,10 +27,5 @@ namespace lab1.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LoadAct> LoadAct { get; set; }
-        override
-        public string ToString()
-        {
-            return this.Name;
-        }
     }
 }

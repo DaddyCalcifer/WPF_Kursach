@@ -12,7 +12,7 @@ namespace lab1.Model
     {
         public ListRole()
         {
-            DbSet<UserType> specifics = PageMain.DataEntitiesSKLAD.UserType;
+            DbSet<UserType> specifics = lab1.Logic.WorkerManager.DataEntitiesSKLAD.UserType;
             var querySpec = from spec in specifics select spec;
             foreach (var specc in querySpec)
             {
