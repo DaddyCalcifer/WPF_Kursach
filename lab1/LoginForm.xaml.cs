@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 using lab1.Logic;
 using lab1.Model;
 
@@ -36,7 +37,7 @@ namespace lab1
             logPasswordBox.Password = loginfo.Password;
             if(loginfo.AutoLogin==true)
             {
-                doLogin(loginfo.Login,loginfo.Password);
+                doLogin(loginfo.Login,loginfo.Password, false);
             }
         }
 
@@ -71,7 +72,7 @@ namespace lab1
         {
             doLogin(logLoginBox.Text.Trim(), logPasswordBox.Password.Trim());
         }
-        public void doLogin(string login, string pass)
+        public void doLogin(string login, string pass, bool anim=true)
         {
             AuthLogic auth = new AuthLogic();
             int id = auth.Login(login, pass);
@@ -85,7 +86,11 @@ namespace lab1
                     rmm.Password = pass;
                 RememberMeManager.SaveLoginData(rmm);
                 MainWindow mw = new MainWindow(id);
+                if(anim)
+                OpenAnimation(this,mw);
                 this.Hide();
+                mw.Top = this.Top;
+                mw.Left = this.Left;
                 mw.ShowDialog();
                 account = new Account();
                 this.Show();
@@ -110,6 +115,20 @@ namespace lab1
         {
             rmm.AutoLogin = rememberMe.IsChecked;
             RememberMeManager.SaveLoginData(rmm);
+        }
+        void OpenAnimation(Window log, Window main)
+        {
+            DoubleAnimation window_h = new DoubleAnimation();
+            DoubleAnimation window_w = new DoubleAnimation();
+
+            window_h.From = 1;
+            window_h.To = main.Height;
+            window_h.Duration = TimeSpan.FromSeconds(0.7);
+            window_w.From = 1;
+            window_w.To = main.Width;
+            window_w.Duration = TimeSpan.FromSeconds(0.7);
+            main.BeginAnimation(Window.WidthProperty, window_w);
+            //main.BeginAnimation(Window.HeightProperty, window_h);
         }
     }
 }
